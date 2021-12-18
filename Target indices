@@ -1,0 +1,9 @@
+def targetIndices(self, nums: List[int], target: int) -> List[int]:
+        nums=sorted(nums)
+        the_ans=[]
+        index=0
+        for val in nums:
+            if val==target:
+                the_ans.append(index)
+            index+=1
+        return the_ans
