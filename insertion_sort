@@ -1,0 +1,12 @@
+def insertionSort1(n, arr):
+    #[2,4,6,8,3]
+    for i in range(n-1,0,-1):
+        my_string=''
+        if arr[i]<arr[i-1]:
+            temp=arr[i]
+            arr[i]=arr[i-1]
+            other_arr=[str(x) for x in arr]
+            print(" ".join(other_arr))
+            arr[i-1]=temp
+    other_arr=[str(x) for x in arr]
+    print(" ".join(other_arr))
