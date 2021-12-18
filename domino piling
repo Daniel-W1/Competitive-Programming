@@ -1,0 +1,7 @@
+inp=input()
+alist=inp.split()
+m=int(alist[0])
+n=int(alist[1])
+def domino_piling(m,n):
+    return (m*n)//2
+print(domino_piling(m,n))
