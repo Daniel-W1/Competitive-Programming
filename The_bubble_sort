@@ -1,0 +1,10 @@
+def countSwaps(a):
+    cnt=0
+    for passnum in range(len(a)-1, 0,-1):
+        for index in range(passnum):
+            if a[index]>a[index+1]:
+                a[index], a[index+1]=a[index+1],a[index]
+                cnt+=1
+    print('Array is sorted in',cnt,'swaps.')
+    print('First Element:',a[0])
+    print('Last Element:',a[-1])
