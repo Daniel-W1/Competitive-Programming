@@ -1,0 +1,13 @@
+def gradingStudents(grades):
+    output=[]
+    for grade in grades:
+        if grade<38:
+            output.append(grade)
+        else:
+            num=grade%5
+            if 5-num <3:
+                output.append(grade+5-num)
+            else:
+                output.append(grade)
+    return output
+            
