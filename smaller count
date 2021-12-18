@@ -1,0 +1,9 @@
+def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
+        the_ans=[]
+        for i in range(len(nums)):
+            cnt=0
+            for val in nums:
+                if nums[i]>val:
+                    cnt+=1
+            the_ans.append(cnt)
+        return the_ans
