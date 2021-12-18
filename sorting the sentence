@@ -1,0 +1,7 @@
+ def sortSentence(self, s: str) -> str:
+        the_list=s.split()
+        the_answer=['' for i in range(len(the_list))]
+        for i in the_list:
+            index=int(i[-1])-1
+            the_answer[index]=i[:-1]
+        return " ".join(the_answer)
