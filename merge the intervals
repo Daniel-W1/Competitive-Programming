@@ -1,0 +1,19 @@
+def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals=sorted(intervals)
+        checker=intervals[0]
+        the_ans=[]
+        if len(intervals)==1:
+            return intervals
+        for i in range(1,len(intervals)):
+            val=intervals[i]
+            if checker[1]>=val[0]:
+                checker=[checker[0], max(checker[1], val[1])]
+                if i==len(intervals)-1:
+                    the_ans.append(checker)       
+            else:
+                the_ans.append(checker)
+                checker=val
+                if i==len(intervals)-1:
+                    the_ans.append(val)
+                    
+        return the_ans
