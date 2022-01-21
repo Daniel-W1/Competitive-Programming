@@ -1,0 +1,12 @@
+from collections import Counter
+from math import factorial
+
+class Solution:
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        
+        count = Counter(nums)
+        the_ans= [factorial(n)/(factorial(n-2)*factorial(2)) for n in count.values() if n>1 ]
+        
+        return int(sum(the_ans))
+      
+        
