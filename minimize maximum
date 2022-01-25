@@ -1,0 +1,11 @@
+ def minPairSum(self, alist: List[int]) -> int:
+        alist.sort()
+        l, h = 0, len(alist)-1
+        minimum = 0
+
+        while l < h:
+            minimum = max(minimum, alist[l]+alist[h])
+            l += 1
+            h -= 1
+        return minimum
+        
