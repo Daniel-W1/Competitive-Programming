@@ -1,0 +1,16 @@
+from collections import Counter
+class Solution:
+    def maxOperations(self, alist: List[int], k: int) -> int:
+        count = Counter(alist)
+        ans=0
+        
+        for i in alist:
+            if i == k-i and count[i] >= 2:
+                ans += 1
+                count[i] -= 2
+                
+            elif count[i] and count[k-i] and i != k-i:
+                ans += 1
+                count[i] -= 1
+                count[k-i] -= 1
+        return ans
