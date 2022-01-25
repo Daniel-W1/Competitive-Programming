@@ -1,0 +1,18 @@
+ def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+        ans=[]
+        
+        for i in range(len(l)):
+            
+            item = nums[l[i]:r[i]+1]
+            item.sort()
+            change = item[1]-item[0]
+            print(change)
+
+            for ind in range(2, len(item)):
+            	if item[ind] - item[ind-1] != change:
+            		ans.append(False)
+            		break
+            else:
+            	ans.append(True)
+        
+        return ans
