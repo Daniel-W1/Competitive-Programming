@@ -1,0 +1,12 @@
+ def maxCoins(self, piles: List[int]) -> int:
+        
+        piles.sort()
+        l, h = 0, len(piles)-1
+        total = 0
+        
+        while l < h:
+            triplet = (piles[l], piles[h-1], piles[h])
+            total += triplet[1]
+            h -= 2
+            l += 1
+        return total
