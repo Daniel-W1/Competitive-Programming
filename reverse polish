@@ -1,0 +1,26 @@
+import operator
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+    
+        ops = {"+": operator.add, "-": operator.sub, "*":operator.mul, "/":operator.floordiv}
+        stack = [] 
+	 
+        for val in tokens:
+            if val not in ops:  
+                stack.append(val)         
+            else:
+                second = int(stack.pop())
+                first = int(stack.pop())
+                if val == "/" and second*first < 0:
+                    total = ceil(first/second)
+                    stack.append(total)
+                else:   
+                    total=ops[val](first, second)
+                    stack.append(total)
+        return stack[0] 
+
+
+
+
+        
