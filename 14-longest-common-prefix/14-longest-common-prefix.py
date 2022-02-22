@@ -2,7 +2,7 @@ class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         prefix = []
         min_leng = self.smallest(strs)
-        print(min_leng)
+       
         for i in range(min_leng):
             check = strs[0][:i+1]
             for word in strs:
