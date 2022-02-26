@@ -9,7 +9,6 @@ class Solution:
             in_dif = (nums[i+1] - nums[i])
             if in_dif: in_dif /= abs(in_dif)
             else: continue
-            print(in_dif)
             ans = nums[i:i+2]
             if max_len < len(nums) - i:
                 index = i+2
