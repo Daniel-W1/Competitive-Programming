@@ -12,3 +12,5 @@ class Solution:
             if cur.next.next:
                 self.swapPairs(cur.next.next)
         return cur
+        
+        
