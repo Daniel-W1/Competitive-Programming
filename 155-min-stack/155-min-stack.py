@@ -18,7 +18,6 @@ class MinStack:
 
     def getMin(self) -> int:
         val = self.minStack[-1]
-        print(self.minStack)
         return val
         
 
