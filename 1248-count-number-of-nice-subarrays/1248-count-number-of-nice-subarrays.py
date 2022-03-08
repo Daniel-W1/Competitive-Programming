@@ -3,7 +3,7 @@ class Solution:
        #[1,1,2,1,1]
        #[1,2,2,3,4]
         
-        count = {}
+        count = {0:1}
         prefix = []
         prev = 0
         for num in (arr):
@@ -12,12 +12,8 @@ class Solution:
                 prev = prefix[-1]
             else: prefix.append(prev)
         for num in prefix:
-            c = count.get(num, 0)
-            count[num] = c+1
-        zero = count.get(0, 0)
-        count[0] = zero + 1
+            count[num] = count.get(num,0) + 1
         res = 0
-        print(prefix)
         for num in prefix:
             if num >= k:
                 dif = num - k
