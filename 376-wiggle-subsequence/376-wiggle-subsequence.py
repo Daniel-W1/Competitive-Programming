@@ -2,13 +2,17 @@ class Solution:
     def wiggleMaxLength(self, nums: List[int]) -> int:
         max_len = 0
         ans = []
+        
         if len(nums) == 1:
             return len(nums)
+        
         for i in range(len(nums)):
             if i + 1 == len(nums): break
             in_dif = (nums[i+1] - nums[i])
+            
             if in_dif: in_dif /= abs(in_dif)
             else: continue
+                
             ans = nums[i:i+2]
             if max_len < len(nums) - i:
                 index = i+2
