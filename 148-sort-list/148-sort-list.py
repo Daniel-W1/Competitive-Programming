@@ -15,7 +15,6 @@ class Solution:
         if not arrlist:
             return None
         new = ans = ListNode(arrlist[0]) 
-        print(type(new))
         for val in arrlist[1:]:
             ans.next = ListNode(val)
             ans = ans.next
