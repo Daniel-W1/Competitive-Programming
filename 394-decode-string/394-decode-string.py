@@ -22,42 +22,27 @@
                     
 class Solution:
     def decodeString(self, s: str) -> str:
-        self.s = s
-        self.pos = 0
-        return ''.join(self.decode_level())
-            
-    def peek(self):
-        try:
-            return self.s[self.pos]
-        except IndexError:
-            return
-        
-    def next(self):
-        char = self.peek()
-        if char:
-            self.pos += 1
-            return char
-
-    def decode_level(self):
-        res = []
-        char = self.next()
-        while char:
-            if char.isalpha():
-                res.append(char)
-            elif char.isnumeric():
-                num_str = char
-                while self.peek().isnumeric():
-                    num_str += self.next()
-                assert self.next() == '['
-                child_result = self.decode_level()
-                res.extend(int(num_str) * child_result)
-            elif char == ']':
-                break
-            char = self.next()
-        return res
-                    
-                    
-            
+        stack = deque()
+        for i in s:
+            if i == ']':
+                word = stack.pop()
+                stack.pop()
+                k = stack.pop()
+                if not stack or stack[-1] in '[]':
+                    stack.append(word * int(k))
+                else:
+                    stack[-1] += word * int(k)
+            elif i == '[':
+                stack.append(i)
+            else:
+                if stack and i.isdigit() == stack[-1].isdigit():
+                    if stack[-1] in '[]':
+                        stack.append(i)
+                    else:
+                        stack[-1] += i
+                else:
+                    stack.append(i)
+        return "".join(stack)
                 
             
             
