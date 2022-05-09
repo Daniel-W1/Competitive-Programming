@@ -2,29 +2,29 @@ class Solution:
     def goodDaysToRobBank(self, A: List[int], t: int) -> List[int]:
 #         ans,pre = [], [0]*len(security)
 #         cnt, prev = 0, 0
-#         for i, val in enumerate(security):
+#         for i in range(1, len(security)):
 #             if security[i] - prev <= 0:
 #                 cnt += 1
 #                 pre[i] = cnt
 #             else:
-#                 pre[i] = cnt
 #                 cnt = 0
+#                 pre[i] = cnt
 #             prev = security[i]
             
 #         post, the_next,cnt = [0]*len(security), 0, 0
-#         for i in range(len(security)-1, -1, -1):
+#         for i in range(len(security)-2, -1, -1):
 #             if security[i] - the_next <= 0:
 #                 cnt += 1
 #                 post[i] = cnt
 #             else:
-#                 post[i] = cnt
 #                 cnt = 0
+#                 post[i] = cnt
 #             the_next = security[i]
             
-#         hashmap = {}
 #         for i in range(len(security)):
-#             if pre[i] >= time and post[i] >= time and i >= time:
+#             if pre[i] >= time and post[i] >= time:
 #                 ans.append(i)
+#         print(pre, post)
 #         return ans
         if t == 0: return list(range(len(A)))
         lft, rgt, n = [1], [1], len(A)
@@ -43,5 +43,5 @@ class Solution:
             else: curr = 1
             rgt.append(curr)
         rgt.reverse()
-        
+        print(lft, rgt)
         return [i for i in range(n) if lft[i] >= t + 1 and rgt[i] >= t + 1]
