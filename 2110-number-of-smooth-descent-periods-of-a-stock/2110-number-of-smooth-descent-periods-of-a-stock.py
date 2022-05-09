@@ -1,9 +1,7 @@
 class Solution:
     def getDescentPeriods(self, prices: List[int]) -> int:
-        ranges = []
         l, h = 0,1
         p = len(prices)
-        others = []
         while h < len(prices):
             prev = prices[l]
             while h < len(prices) and prev-prices[h] == 1:
