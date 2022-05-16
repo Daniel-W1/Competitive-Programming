@@ -10,7 +10,7 @@ class Solution:
             if not root1 and not root2:
                 return True
             elif root1 and root2 and root1.val == root2.val:
-                return check(root1.left, root2.left) and check(root1.right, root2.right)
+                return check(root1.right, root2.right) and check(root1.left, root2.left)
             else:
                 return False
         return check(p,q)
