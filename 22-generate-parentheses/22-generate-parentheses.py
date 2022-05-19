@@ -5,7 +5,7 @@ class Solution:
             if left and right:
                 return generate(ans+"(", left-1, right) and generate(ans+")",left,right-1)
             if left:
-                return generate(ans+"(",left-1,right)
+                return output
             if right:
                 return generate(ans+")",left,right-1)
             if not right and not left:
