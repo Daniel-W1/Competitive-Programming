@@ -1,4 +1,4 @@
-from heapq import *
+from heapq import heapify, heappop, heappush
 class Solution:
     def furthestBuilding(self, heights: List[int], bricks: int, ladders: int) -> int:
         minHeap = []
