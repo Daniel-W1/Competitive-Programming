@@ -15,5 +15,5 @@ class Solution:
                         if row[j] != 0:
                             row[j] = 0
                             check_map[c,j] = True
-                    
+        
         
