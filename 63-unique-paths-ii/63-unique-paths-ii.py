@@ -3,7 +3,6 @@ class Solution:
         m = len(grid[0])-1
         n = len(grid)-1
         memo = {}
-        print(m, n)
         def findunique(a, b):
             if (a,b) not in memo:
                 if a == m and b == n and grid[b][a] != 1:
