@@ -1,12 +1,14 @@
 class Solution:
     def minimumTime(self, time: List[int], totalTrips: int) -> int:
-        lo, hi = 1, totalTrips * min(time)
-
-        def f(x):
-            return sum(x // t for t in time) >= totalTrips
-
-        while lo < hi:
-            mid = (lo + hi) // 2
-            if not f(mid): lo = mid + 1
-            else: hi = mid
-        return lo
+        l = 0
+        tail = totalTrips*min(time)
+        while l < tail:
+            mid = (l+tail)//2
+            cnt = 0
+            for val in time:
+                cnt += (mid//val)
+            if cnt >= totalTrips:
+                tail = mid
+            else:
+                l = mid + 1
+        return l
