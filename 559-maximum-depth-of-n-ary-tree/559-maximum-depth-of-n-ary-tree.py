@@ -14,11 +14,14 @@ class Solution:
         def findmax(root,cnt):
             childs = root.children
             if not childs:
-                depths.append(cnt+1)
+                if not depths:
+                    depths.append(cnt+1)
+                elif cnt+1 > depths[-1]:
+                    depths.append(cnt+1)
             for child in childs:
                 findmax(child,cnt+1)
         findmax(root,0)
-        return max(depths)
+        return depths[-1]
         
         
             
