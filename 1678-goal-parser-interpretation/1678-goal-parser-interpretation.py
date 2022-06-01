@@ -12,7 +12,5 @@ class Solution:
                     i += 2
                 else:
                     ans += "al"
-                    i += 3
-            else:
-                i += 1
+                    i += 4
         return ans
