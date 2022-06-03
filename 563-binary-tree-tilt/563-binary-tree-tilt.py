@@ -10,10 +10,10 @@ class Solution:
         def dfs(root):
             if not root:
                 return 0
-            left = dfs(root.left)+root.val
-            right = dfs(root.right)+root.val
+            left = dfs(root.left)
+            right = dfs(root.right)
             self.total += (abs(left-right))
-            return left+right-root.val
+            return left+right+root.val
         dfs(root)
         return self.total
            
