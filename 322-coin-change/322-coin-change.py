@@ -10,13 +10,30 @@ class Solution:
 #         return dp[amount] if dp[amount] < amount+1 else -1
     
     # ugly but fast solution 
-            cnt, prev = 0, 1 << amount
-            while prev & 1 == 0:
-                curr = prev
+            # cnt, prev = 0, 1 << amount
+            # while prev & 1 == 0:
+            #     curr = prev
+            #     for coin in coins:
+            #         curr |= prev >> coin
+            #     if curr == prev:
+            #         return -1
+            #     cnt += 1
+            #     prev = curr
+            # return cnt
+            if amount == 0: return 0
+            def coinchange(coins, amount, memo = {}):
+                if amount in memo: return memo[amount]
+                if amount == 0: return []
+                if amount < 0: return None
+                output = None
                 for coin in coins:
-                    curr |= prev >> coin
-                if curr == prev:
-                    return -1
-                cnt += 1
-                prev = curr
-            return cnt
+                    new = amount - coin
+                    res = coinchange(coins, new)
+                    if res != None:
+                        res = res + [coin]
+                        if not output or len(res) < len(output):
+                            output = res
+                memo[amount] = output
+                return output
+            minsize = coinchange(coins,amount)
+            return len(minsize) if minsize else -1
