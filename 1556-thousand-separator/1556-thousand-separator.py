@@ -1,11 +1,9 @@
 class Solution:
     def thousandSeparator(self, n: int) -> str:
-        num = str(n)
         new = []
-        i = len(num)-1
-        prev = i
-        while i >= 0:
-            new.append(num[i])
+        prev = len(str(n))-1
+        for i in range(len(str(n))-1,-1,-1):
+            new.append(str(n)[i])
             if i == prev-2 and i > 0:
                 new.append(".")
                 prev = i-1
