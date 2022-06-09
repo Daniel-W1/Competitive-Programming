@@ -16,16 +16,18 @@ class Solution:
                 else:
                     l = mid + 1
             return -1
+        charset = set()
         for i,val in enumerate(nums):
-            new_target = target - val
-            nums[i] = val-0.5
-            if new_target >= val:
-                check = binarysearch(i, len(nums)-1,new_target)
-            else:
-                check = binarysearch(0,i,new_target)
-            if check >= 0:
-                return [i+1,check+1]
-            nums[i] = val
-        
-                
-                
+            if val not in charset:
+                new_target = target - val
+                nums[i] = val-0.5
+                if new_target >= val:
+                    check = binarysearch(i, len(nums)-1,new_target)
+                else:
+                    check = binarysearch(0,i,new_target)
+                if check >= 0:
+                    return [i+1,check+1]
+                nums[i] = val
+                charset.add(val)
+
+
