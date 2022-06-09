@@ -11,11 +11,12 @@ class Solution:
         def checkbalance(root):
             if not root:
                 return 0
-            left = checkbalance(root.left)+1 if checkbalance(root.left) != None else -float('inf')
-            right = checkbalance(root.right)+1 if checkbalance(root.right) != None else float('inf')
-            
+            left = checkbalance(root.left)
+            right = checkbalance(root.right)
+            if left < 0 or right < 0:
+                return -1
             if abs(left-right) < 2:
-                return max(left,right)
+                return max(left,right)+1
             else:
-                return None
-        return checkbalance(root)
+                return -1
+        return checkbalance(root) != -1
