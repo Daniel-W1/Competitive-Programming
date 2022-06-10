@@ -1,5 +1,5 @@
 class Solution:
-    # def lengthOfLongestSubstring(self, s: str) -> int:
+    def lengthOfLongestSubstring(self, s: str) -> int:
 #         charset=set()
 #         l=0
 #         res=0
@@ -11,7 +11,6 @@ class Solution:
 #             charset.add(s[h])
 #             res= max(res, h-l +1)
 #         return res
-    def lengthOfLongestSubstring(self, s: str) -> int:
         stack = ''
         mx = 0
         for i in s:
