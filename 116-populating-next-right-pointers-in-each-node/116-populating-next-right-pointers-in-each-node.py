@@ -17,14 +17,11 @@ class Solution:
         q.append(root)
         
         while q:
-            length = len(q)
-            for _ in range(length):
-                node = q.pop(0)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            level = [node.val for node in q]
-            for i in range(len(q)-1):
-                q[i].next = q[i+1]
+            node = q.pop(0)
+            if node.left and node.right:
+                node.left.next = node.right
+                if node.next:
+                    node.right.next = node.next.left
+                q.append(node.left)
+                q.append(node.right)
         return root
