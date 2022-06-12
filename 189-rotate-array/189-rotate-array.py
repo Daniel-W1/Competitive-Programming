@@ -3,11 +3,6 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        new = nums.copy()
-        print(new)
-        for i, val in enumerate(new):
-            index = i + k
-            while index > len(new)-1: 
-                index -= len(new)
-            nums[index] = val
-            
+        k = k%len(nums)
+        last = len(nums)-k
+        nums[:] = nums[last:]+nums[:last]
