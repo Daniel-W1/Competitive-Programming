@@ -1,4 +1,3 @@
 class Solution:
     def thirdMax(self, nums: List[int]) -> int:
-        nums = list(set(nums))
-        return heapq.nlargest(3,nums)[-1] if len(nums) >= 3 else max(nums)
+        return heapq.nlargest(3,list(set(nums)))[-1] if len(list(set(nums))) >= 3 else max(nums)
