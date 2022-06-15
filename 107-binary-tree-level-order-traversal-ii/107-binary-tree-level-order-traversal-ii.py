@@ -10,7 +10,7 @@ class Solution:
             return []
         q = []
         q.append(root)
-        ans = []
+        ans = collections.deque([])
         while q:
             level =[]
             width = len(q)
@@ -21,5 +21,5 @@ class Solution:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-            ans.append(level)
-        return ans[::-1]
+            ans.appendleft(level)
+        return ans
