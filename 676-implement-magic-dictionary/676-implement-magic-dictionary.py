@@ -17,8 +17,3 @@ class MagicDictionary:
             if cnt == 1:
                 return True
         return False
-
-# Your MagicDictionary object will be instantiated and called as such:
-# obj = MagicDictionary()
-# obj.buildDict(dictionary)
-# param_2 = obj.search(searchWord)
