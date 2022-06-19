@@ -1,20 +1,18 @@
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
         products.sort()
+        l,h = 0,len(products)-1
         ans = []
-        for i in range(len(searchWord)):
-            char = searchWord[i]
-            filtered = []
-            for word in products:
-                if i < len(word) and word[i] == char:
-                       filtered.append(word)
+        for i,char in enumerate(searchWord):
+            while l <= h and (i >= len(products[l]) or products[l][i] != char):
+                l += 1
+            while l <= h and (i >= len(products[h]) or products[h][i] != char):
+                h -= 1
+            cnt = 0
             level = []
-            for i in range(len(filtered)):
-                level.append(filtered[i])
-                if i == 2:
-                    break
+            remain = h-l+1
+            for j in range(min(3,remain)):
+                level.append(products[l+j])
             ans.append(level)
-            products = filtered
         return ans
             
-                
