@@ -1,16 +1,25 @@
-class Solution(object):
-    def minimumLengthEncoding(self, words):
-        words = list(set(words)) #remove duplicates
-        #Trie is a nested dictionary with nodes created
-        # when fetched entries are missing
-        Trie = lambda: collections.defaultdict(Trie)
-        trie = Trie()
+class trienode:
+    def __init__(self):
+        self.children = {}
+class trie:
+    def __init__(self):
+        self.root = trienode()
+        self.ends = []
+    def insert(self,word):
+        root = self.root
+        for i in range(len(word)-1,-1,-1):
+            if word[i] not in root.children:
+                root.children[word[i]] = trienode()
+            root = root.children[word[i]]
+        self.ends.append((root,len(word)+1))
 
-        #reduce(..., S, trie) is trie[S[0]][S[1]][S[2]][...][S[S.length - 1]]
-        nodes = [reduce(dict.__getitem__, word[::-1], trie)
-                 for word in words]
-
-        #Add word to the answer if it's node has no neighbors
-        return sum(len(word) + 1
-                   for i, word in enumerate(words)
-                   if len(nodes[i]) == 0)
+class Solution:
+    def minimumLengthEncoding(self, words: List[str]) -> int:
+        words = list(set(words))
+        t = trie()
+        
+        for w in words:
+            t.insert(w)
+        
+        return sum([depth for node,depth in t.ends if len(node.children)==0])
+            
