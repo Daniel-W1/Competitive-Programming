@@ -12,14 +12,11 @@ class Solution:
                 graph[road[1]].append(road[0])
             return graph
         graph = buildgraph(roads)
-        helper = []
-       
-        for k,v in graph.items():
-            helper.append((k,len(v)))
-        helper.sort(key = lambda val:val[1],reverse = True)
-        ans = 0
-        max_value = n
-        for val in helper:
-            ans += max_value*val[1]
+        helper = [-len(val) for val in graph.values()]
+        heapq.heapify(helper)
+        length = len(helper)
+        answer,max_value = 0,n
+        for _ in range(length):
+            answer += -(max_value*(heapq.heappop(helper)))
             max_value -= 1
-        return ans
+        return answer
