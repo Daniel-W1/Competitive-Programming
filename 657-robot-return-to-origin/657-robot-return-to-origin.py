@@ -4,10 +4,10 @@ class Solution:
         for m in moves:
             if m == "U":
                 pos[1]+= 1
-            if m == "D":
+            elif m == "D":
                 pos[1] -= 1
-            if m == "R":
+            elif m == "R":
                 pos[0] += 1
-            if m == "L":
+            else:
                 pos[0] -= 1
         return pos == [0,0]
