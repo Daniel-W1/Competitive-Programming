@@ -1,7 +1,5 @@
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
-        if len(s) < len(t):
-            s,t = t,s
         cnt1 = Counter(s)
         cnt2 = Counter(t)
         steps = 0
