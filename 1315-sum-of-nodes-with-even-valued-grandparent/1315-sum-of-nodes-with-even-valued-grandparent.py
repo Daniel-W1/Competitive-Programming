@@ -6,26 +6,35 @@
 #         self.right = right
 class Solution:
     def sumEvenGrandparent(self, root: TreeNode) -> int:
+#         self.ans = 0
+#         def dfs(root,parent,grandparent):
+#             if not root:
+#                 return
+#             if grandparent:
+#                 self.ans += root.val
+#             if parent:
+#                 if root.val%2 == 0:
+#                     dfs(root.left,True,True)
+#                     dfs(root.right,True,True)
+#                 else:
+#                     dfs(root.left,False,True)
+#                     dfs(root.right,False,True)
+#             elif root.val%2 == 0:
+#                 dfs(root.left,True,False)
+#                 dfs(root.right,True,False)
+#             else:
+#                 dfs(root.left,False,False)
+#                 dfs(root.right,False,False)
+#         dfs(root,False,False)
+#         return self.ans
         self.ans = 0
         def dfs(root,parent,grandparent):
             if not root:
                 return
-            if grandparent:
+            if parent and grandparent and grandparent.val%2 == 0:
                 self.ans += root.val
-            if parent:
-                if root.val%2 == 0:
-                    dfs(root.left,True,True)
-                    dfs(root.right,True,True)
-                else:
-                    dfs(root.left,False,True)
-                    dfs(root.right,False,True)
-            elif root.val%2 == 0:
-                dfs(root.left,True,False)
-                dfs(root.right,True,False)
-            else:
-                dfs(root.left,False,False)
-                dfs(root.right,False,False)
-        dfs(root,False,False)
+            dfs(root.left,root,parent)
+            dfs(root.right,root,parent)
+        dfs(root,None,None)
         return self.ans
-                
             
