@@ -11,6 +11,7 @@ class Solution:
                 return True
             if not (left < node.val < right):
                 return False
+            
             l = dfs(node.left,left,min(node.val,right))
             r = dfs(node.right,max(left,node.val),right)
             
