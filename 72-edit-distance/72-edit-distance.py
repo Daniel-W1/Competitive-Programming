@@ -1,21 +1,24 @@
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
-        # ros
-        # horse 
-        dp = [[float('inf') for _ in range(len(word2)+1)] for _ in range(len(word1)+1)]
+        mm = len(word1)
+        nn = len(word2)
         
-        # we need to fill the box with our base cases
-        
-        for j in range(len(word2)+1):
-            dp[len(word1)][j] = len(word2)-j
-        for i in range(len(word1)+1):
-            dp[i][len(word2)] = len(word1)-i
-
-        for i in range(len(word1)-1,-1,-1):
-            for j in range(len(word2)-1,-1,-1):
-                if word1[i] == word2[j]:
-                    dp[i][j] = dp[i+1][j+1]
-                else:
-                    dp[i][j] = 1 + min(dp[i+1][j],dp[i+1][j+1],dp[i][j+1])
-        return dp[0][0]
-        
+        visited = set()
+        # (step, left, right)
+        queue = [(0, 0, 0)]
+        while queue:
+            step, left, right = heappop(queue)
+            if left == mm and right == nn:
+                return step
+            if left == mm or right == nn:
+                heappush(queue, (step + mm - left + nn - right, mm, nn))
+                continue
+            if (left,right) in visited:
+                continue
+            visited.add((left, right))
+            if word1[left] == word2[right]:
+                heappush(queue, (step, left + 1, right + 1))
+                continue
+            heappush(queue,(step + 1, left + 1, right + 1))
+            heappush(queue,(step + 1, left, right + 1))
+            heappush(queue,(step + 1, left + 1, right))
