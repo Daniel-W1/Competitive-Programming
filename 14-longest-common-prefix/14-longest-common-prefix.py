@@ -1,20 +1,23 @@
+class trienode:
+    def __init__(self):
+        self.children = {}
+        self.end = False
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        prefix = []
-        min_leng = self.smallest(strs)
-       
-        for i in range(min_leng):
-            check = strs[0][:i+1]
-            for word in strs:
-                if not word.startswith(check):
-                    return prefix[-1] if prefix else ""
-            prefix.append(check)
-        return prefix[-1] if prefix else ""
-                    
-    def smallest(self, strs):
-        min_leng = 201
+        self.root = trienode()
         for word in strs:
-            min_leng = min(min_leng, len(word))
-        return min_leng
+            cur = self.root
+            for char in word:
+                if char not in cur.children:
+                    cur.children[char] = trienode()
+                cur = cur.children[char]
+            cur.end = True
+        cur = self.root
+        res = ""
+        while len(cur.children) == 1 and not cur.end:
+            for char in cur.children:
+                res += char
+            cur = cur.children[char]
+        return res
         
-        
+                
