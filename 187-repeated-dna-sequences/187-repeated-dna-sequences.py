@@ -1,19 +1,40 @@
 class Solution:
     def findRepeatedDnaSequences(self, s: str) -> List[str]:
-        if len(s) < 10:
-            return []
-        # so we are gonna do this like a pro,
-        # we are gonna use hashing for O(n) sol
-        # abcbbabc 3
-        # 1*1 + 2*10 + 3*100
-        window = collections.deque([])
-        cnt = {}
-        for i in range(10):
-            window.append(s[i])
-        cnt["".join(window)] = 1
-        for i in range(10, len(s)):
-            window.popleft()
-            window.append(s[i])
-            string = "".join(window)
-            cnt[string] = cnt.get(string, 0) + 1
-        return [k for k in cnt if cnt[k] > 1]
+        # print(10*(4**9))
+        h = {
+            'A':1,
+            'C':2,
+            'G':3,
+            'T':4
+        }
+        
+        mod = 10**9 + 7
+        mult = 4**9
+        ans = []
+        found = {}
+        
+        code = 0
+        for i in range(min(10, len(s))):
+            code += h[s[i]] * (4**i)
+            
+        found[code] = 1 
+        
+        i = 0
+        j = 10
+        while j < len(s):
+            code -= h[s[i]] 
+            code //= 4
+            
+            code += h[s[j]] * mult
+            
+            i+=1
+            j+=1
+            
+            if code in found:
+                if found[code] == 1:
+                    ans.append(s[i:j])
+                    found[code] +=1
+            else:
+                found[code] =1
+        
+        return ans
