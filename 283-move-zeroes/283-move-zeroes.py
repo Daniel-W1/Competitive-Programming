@@ -1,21 +1,15 @@
 class Solution:
-    def moveZeroes(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        l, h = 0, 1
-        while h < len(nums):
-            if l < len(nums) and nums[l] != 0:
-                l += 1
-                h += 1
-            else:
-                if nums[h] == 0:
-                    while h < len(nums) and nums[h] == 0:
-                        h += 1
-                    if h < len(nums):
-                        nums[l], nums[h] = nums[h], nums[l]
-                else:
-                    nums[l], nums[h] = nums[h], nums[l]
-                        
+    def moveZeroes(self, nums: list) -> None:
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] != 0 and nums[slow] == 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+
+            # wait while we find a non-zero element to
+            # swap with you
+            if nums[slow] != 0:
+                slow += 1
                 
+                #[24,18,70,19,4,50,20,15,16,23,51,60]           
+                #[24,18,19,4,20,15,16,23,60,51,70,50]
                 
