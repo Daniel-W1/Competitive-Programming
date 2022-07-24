@@ -5,31 +5,32 @@
 #         self.next = next
 class Solution:
     def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        alist = []
-        cur = head
-        while cur:
-            alist.append(cur.val)
-            cur = cur.next
+        first,prev = head, head
+        start = first.next
         
-        for index in range(1, len(alist)):
-            value = alist[index]
-            pos = index
-            
-            while pos and alist[pos-1] > value:
-                alist[pos] = alist[pos -1]
-                pos -=1
-            
-            alist[pos]= value
-        dummy = head = ListNode()
-        for i in range(len(alist)):
-            head.next = ListNode(alist[i])
-            head = head.next
-        
-            
-        
-        return dummy.next
-        
-        
-            
-    
-        
+        while start:
+            if start.val < prev.val:
+                # do the insert logic
+                temp = start
+                the_next = start.next
+                prev.next = prev.next.next
+                if first.val > temp.val:
+                    temp.next = first
+                    head = temp
+                    first = head
+                else:
+                    prevn = None
+                    while first:
+                        if first.val > temp.val:
+                            prevn.next = temp
+                            temp.next = first
+                            break
+                        else:
+                            prevn = first
+                        first = first.next
+                    first = head
+                start = the_next
+            else:
+                prev = start
+                start = start.next
+        return head
