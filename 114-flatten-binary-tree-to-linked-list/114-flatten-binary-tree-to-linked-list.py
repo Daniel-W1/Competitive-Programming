@@ -9,17 +9,22 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        arr = []
-        def pre(root, arr):
-            if root:
-                arr.append(root.val)
-                pre(root.left, arr)
-                pre(root.right, arr)
-            return arr
-        ans = pre(root,arr)
-        for val in ans[1:]:
-            root.right = TreeNode(val)
-            root.left = None
-            root = root.right
-        return root
+        def dfs(root):
+            if not root:
+                return None
+            if not root.left and not root.right:
+                return root
+            
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if left:
+                root.right, root.left = left, None
+            # we need to find the last node of the left part
+            while left and left.right:
+                left = left.right
+            
+            if left:
+                left.right = right 
+            return root
+        dfs(root)
         
