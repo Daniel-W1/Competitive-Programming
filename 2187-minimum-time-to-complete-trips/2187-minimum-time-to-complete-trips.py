@@ -1,6 +1,6 @@
 class Solution:
     def minimumTime(self, time: List[int], totalTrips: int) -> int:
-        left, right = 0, 10**15
+        left, right = 0, totalTrips*min(time)
         while left <= right:
             mid = (left + right)//2
             trips = 0
