@@ -1,74 +1,38 @@
 
+#User function Template for python3
 class Solution:
-    
-    def swap(self, index1, index2, arr):
-        arr[index1], arr[index2] = arr[index2], arr[index1]
-
-    def leftChild(self, index, n):
-        left = (2 * index) + 1
-        return left
-
-    def rightChild(self, index, n):
-        right = (2 * index) + 2
-        return right
-
-    def parent(self, index):
-        if index == 0:
-            return 0
-        return (index - 1) // 2
-
-    def upHeap(self, arr, n, index):
-        parent = self.parent(index)
-        while index > 0 and arr[index] < arr[parent]:
-            self.swap(index, parent, arr)
-            index = parent
-            parent = self.parent(index)
-
-    def downHeap(self, arr, n, index):
-        while self.leftChild(index, n) < n:
-            minChild = self.leftChild(index, n)
-            right = self.rightChild(index, n)
-            if right < n and arr[right] < arr[minChild]:
-                minChild = self.rightChild(index, n)
-            if arr[minChild] < arr[index]:
-                self.swap(index, minChild, arr)
-                index = minChild
-            else:
-                break
-
-    def getMin(self, arr):
-        if not arr:
-            return
-        return arr[0]
-
-    def reverse(self, arr, n):
-        start, end = 0, n-1
-        while start < end:
-            self.swap(start, end, arr)
-            start += 1
-            end -= 1
-
-    def heapify(self, arr, n, i):
-        self.upHeap(arr, n, i)
-        self.downHeap(arr, n, i)
-
-    def buildHeap(self, arr, n):
-        for i in range(n):
-            self.upHeap(arr, n, i)
-
-    def HeapSort(self, arr, n):
-        self.buildHeap(arr, n)
-        temp = n
-    
-        while temp > 0:
-            self.swap(0, temp-1, arr)
-            self.downHeap(arr, temp-1, 0)
-            temp -= 1
+    #Heapify function to maintain heap property.
+    def heapify(self,arr, n, i):
+        # code here
+        largest, left, right = i, 2*i+1, 2*i+2
+        if left < n and arr[left] > arr[largest]:
+            largest = left
+        if right < n and arr[right] > arr[largest]:
+            largest = right
         
-        self.reverse(arr, n)
-        return arr
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            self.heapify(arr, n, largest)
+    
+    
+    # Function to build a Heap from array.
+    def buildHeap(self,arr,n):
+        # code here
+        for i in range(n//2-1, -1, -1):
+            self.heapify(arr, n, i)
+    
+    #Function to sort an array using Heap Sort.    
+    def HeapSort(self, arr, n):
+        #code here
+        self.buildHeap(arr, len(arr))
+        for i in range(len(arr)-1, 0, -1):
+            arr[0], arr[i] = arr[i], arr[0]
+            self.heapify(arr, i, 0)
+    
+
+
 #{ 
-#  Driver Code Starts
+ # Driver Code Starts
 #Initial Template for Python 3
 import atexit
 import io
