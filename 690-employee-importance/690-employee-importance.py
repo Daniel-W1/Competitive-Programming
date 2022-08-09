@@ -9,18 +9,14 @@ class Employee:
 
 class Solution:
     def getImportance(self, employees: List['Employee'], id: int) -> int:
-        for person in employees:
-            if person.id == id:
-                break
-        self.ans = 0
-        def dfs(person):
-            self.ans += person.importance
-            for p in person.subordinates:
-                for sub in employees:
-                    if sub.id == p:
-                        break
-                dfs(sub)
-        dfs(person)
-        return self.ans
-                
-                
+        graph = {node.id : (node.importance, node.subordinates) for node in employees}
+        def calculate(person):
+            if not person[1]:
+                return person[0]
+            answer = 0
+            for subs in person[1]:
+                answer += calculate(graph[subs])
+            return answer + person[0]
+        
+        return calculate(graph[id])
+            
