@@ -8,21 +8,12 @@ class Node:
 
 class Solution:
     def maxDepth(self, root: 'Node') -> int:
-        depths = []
-        if not root:
-            return 0
-        def findmax(root,cnt):
-            childs = root.children
-            if not childs:
-                if not depths:
-                    depths.append(cnt+1)
-                elif cnt+1 > depths[-1]:
-                    depths.append(cnt+1)
-            for child in childs:
-                findmax(child,cnt+1)
-        findmax(root,0)
-        return depths[-1]
+        def dfs(root):
+            if not root:
+                return 0
+            answer = 1
+            for kid in root.children:
+                answer = max(answer, dfs(kid)+1)
+            return answer
         
-        
-            
-        
+        return dfs(root)
