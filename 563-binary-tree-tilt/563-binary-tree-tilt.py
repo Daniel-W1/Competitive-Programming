@@ -6,15 +6,17 @@
 #         self.right = right
 class Solution:
     def findTilt(self, root: Optional[TreeNode]) -> int:
-        self.total = 0
+        self.ans = 0
         def dfs(root):
             if not root:
                 return 0
+            if root and not root.left and not root.right:
+                return root.val
             left = dfs(root.left)
             right = dfs(root.right)
-            self.total += (abs(left-right))
-            return left+right+root.val
+            
+            self.ans += abs(left - right)
+            return left + right + root.val
+            
         dfs(root)
-        return self.total
-           
-                
+        return self.ans
