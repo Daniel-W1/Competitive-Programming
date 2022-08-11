@@ -1,44 +1,35 @@
 class Solution:
-    def solve(self, board: List[List[str]]) -> None:
-        """
-        Do not return anything, modify board in-place instead.
-        """
+    def solve(self, grid: List[List[str]]) -> None:
+        ibound = lambda i : i >= 0 and i < len(grid)
+        jbound = lambda j : j >= 0 and j < len(grid[0])
         visited = set()
-        def dfs(i,j,visited):
-            if (i,j) in visited:
-                return
-            if i < 0 or i > len(board)-1 or j < 0 or j > len(board[0])-1:
-                return
-            if board[i][j] == "X":
-                return
-            visited.add((i,j))
-            dfs(i+1,j,visited)
-            dfs(i-1,j,visited)
-            dfs(i,j+1,visited)
-            dfs(i,j-1,visited)
-        
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if (i == 0 or j == 0 or i == len(board)-1 or j == len(board[0])-1) and board[i][j] == "O":
-                    dfs(i,j,visited)
-        def dfs_mark(i,j,visited):
-            if (i,j) in visited:
-                return
-            if i < 0 or i > len(board)-1 or j < 0 or j > len(board[0])-1:
-                return
-            if board[i][j] == "X":
-                return
-            board[i][j] = "X"
-            visited.add((i,j))
-            dfs_mark(i+1,j,visited)
-            dfs_mark(i-1,j,visited)
-            dfs_mark(i,j+1,visited)
-            dfs_mark(i,j-1,visited)
+        def dfs(sr, sc,visited):
+            if not ibound(sr) or not jbound(sc) or grid[sr][sc] == "X" or (sr,sc) in visited:
+                return 
+
+            visited.add((sr,sc))    
+            dfs(sr+1, sc,visited)
+            dfs(sr, sc + 1,visited)
+            dfs(sr - 1, sc,visited)
+            dfs(sr, sc - 1,visited)
             
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                if (i,j) not in visited and board[i][j] == "O":
-                    dfs_mark(i,j,visited)
+        for col in range(len(grid[0])):
+            if grid[0][col] == "O":
+                dfs(0,col,visited)
+            if grid[len(grid)-1][col] == "O":
+                dfs(len(grid)-1,col,visited)
+                
+        for row in range(len(grid)):
+            if grid[row][0] == "O":
+                dfs(row, 0,visited)
+            if grid[row][len(grid[0])-1] == "O":
+                dfs(row, len(grid[0])-1,visited)
         
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == "O" and (i,j) not in visited:
+                    grid[i][j] = "X"
         
-        return board
+            
+
+        
