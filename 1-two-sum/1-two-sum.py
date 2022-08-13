@@ -1,9 +1,11 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashmap = {}
-        for i, val in enumerate(nums):
-            hashmap[val] = i
-        for i,val in enumerate(nums):
-            if target - val in hashmap and hashmap[target-val] != i:
-                return [i, hashmap[target-val]]
-            
+      # brutforce
+        for index in range(len(nums)):
+            first_num = nums[index]
+            for second_index in range(index+1, len(nums)):
+                second_num = nums[second_index]
+                if second_num + first_num == target:
+                    return [index, second_index]
+                
+                
