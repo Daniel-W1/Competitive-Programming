@@ -25,20 +25,19 @@ class Solution:
             res = 0
             for value in range(1, m+1):
                 res += (min(cur, n*value)//value)
-                # print(min(cur, n*value), min(cur, n*value)//value)
             return res
         
         left, right = 1, m*n
         
-        while left < right:
+        while left <= right:
             mid = (left + right)//2
             check = findout(mid)
             
-            if check > k-1:
-                right = mid 
+            if check >= k:
+                right = mid - 1
             else:
                 left = mid + 1
                 
-        return left
+        return right + 1
         
         
