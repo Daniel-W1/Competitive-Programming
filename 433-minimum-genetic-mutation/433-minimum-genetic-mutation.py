@@ -1,29 +1,27 @@
-class Solution:
-    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
-        words = set(bank)
-        letters = "ACGT"
-        def findall(word):
-            ans = []
-            for i, letter in enumerate(word):
-                for char in letters:
-                    string = word[:i]+char+word[i+1:]
-                    if string in words:
-                        words.remove(string)
-                        ans.append(string)
-            return ans
-        
-        q = collections.deque([start])
-        moves = 0
-        while q:
-            cur = len(q)
-            for _ in range(cur):
-                word = q.popleft()
-                if word == end:
-                    return moves
-                
-                res = findall(word)
-                if res:
-                    q += res
-            moves += 1
+import collections
+
+def viableMutation(current_mutation, next_mutation):
+    changes = 0
+    for i in xrange(len(current_mutation)):
+        if current_mutation[i] != next_mutation[i]:
+            changes += 1
+    return changes == 1
+
+class Solution(object):
+    def minMutation(self, start, end, bank):
+        """
+        :type start: str
+        :type end: str
+        :type bank: List[str]
+        :rtype: int
+        """
+        queue = collections.deque()
+        queue.append([start, start, 0]) # current, previous, num_steps
+        while queue:
+            current, previous, num_steps = queue.popleft()
+            if current == end:  # in BFS, the first instance of current == end will yield the minimum
+                return num_steps
+            for string in bank:
+                if viableMutation(current, string) and string != previous:
+                    queue.append([string, current, num_steps+1])
         return -1
-                
