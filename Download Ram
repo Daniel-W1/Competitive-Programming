@@ -1,0 +1,18 @@
+t = int(input())
+for _ in range(t):
+    n, k = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+
+    ordered = sorted([(a[idx], idx) for idx in range(len(a))])
+    # print(ordered)
+
+    cur = k
+    for req, idx in ordered:
+        if cur >= req:
+            cur += b[idx]
+        else:
+            print(cur)
+            break
+    if cur >= req:
+        print(cur)
