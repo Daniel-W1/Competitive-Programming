@@ -1,29 +1,33 @@
 class TimeMap:
-
     def __init__(self):
-        self.allvalues = collections.defaultdict(list)
+        self.key_time_map = {}
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.allvalues[key].append((timestamp, value))
+        # If the 'key' does not exist in dictionary.
+        if not key in self.key_time_map:
+            self.key_time_map[key] = []
+            
+        # Store '(timestamp, value)' pair in 'key' bucket.
+        self.key_time_map[key].append([ timestamp, value ])
+        
 
     def get(self, key: str, timestamp: int) -> str:
-        array = self.allvalues[key]
-        if not array: return ""
-        left, right = 0, len(array)-1
+        # If the 'key' does not exist in dictionary we will return empty string.
+        if not key in self.key_time_map:
+            return ""
         
-        while left <= right:
-            mid = (left+right)//2
-            if array[mid][0] == timestamp:
-                return array[mid][1]
-            elif array[mid][0] < timestamp:
+        if timestamp < self.key_time_map[key][0][0]:
+            return ""
+        
+        left = 0
+        right = len(self.key_time_map[key])
+        
+        while left < right:
+            mid = (left + right) // 2
+            if self.key_time_map[key][mid][0] <= timestamp:
                 left = mid + 1
             else:
-                right = mid - 1
-        
-        return array[left-1][1] if array[left-1][0] < timestamp else ""
+                right = mid
 
-
-# Your TimeMap object will be instantiated and called as such:
-# obj = TimeMap()
-# obj.set(key,value,timestamp)
-# param_2 = obj.get(key,timestamp)
+        # If iterator points to first element it means, no time <= timestamp exists.
+        return "" if right == 0 else self.key_time_map[key][right - 1][1]
