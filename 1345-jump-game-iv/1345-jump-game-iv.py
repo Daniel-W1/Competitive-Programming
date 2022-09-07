@@ -5,12 +5,12 @@ class Solution:
             inds[val].append(idx)
         
         seen = set()
-        heap = [(0, 0)]
+        q = collections.deque([(0, 0)])
         visited = set()
         
         # print(inds)
-        while heap:
-            dist, idx = heappop(heap)
+        while q:
+            dist, idx = q.popleft()
             left,right = idx-1, idx+1
             visited.add(idx)
             # print("here", arr[idx],heap)
@@ -18,12 +18,12 @@ class Solution:
                 return dist
             
             if left >= 0 and left not in visited:
-                heapq.heappush(heap, (dist+1, left))
+                q.append((dist+1, left))
             if right < len(arr) and right not in visited:
-                heapq.heappush(heap, (dist+1, right))
+                q.append((dist+1, right))
                 
             if arr[idx] not in seen:
                 for ind in inds[arr[idx]]:
                     if idx != ind:
-                        heapq.heappush(heap, (dist+1, ind))
+                        q.append((dist+1, ind))
             seen.add(arr[idx])
