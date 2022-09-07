@@ -1,22 +1,16 @@
 class Solution:
     def canCross(self, stones: List[int]) -> bool:
-        memo = {}
-        def cross(idx, prevjump):
-            if (idx, prevjump) in memo: return memo[idx, prevjump]
-            if idx == stones[-1]:
-                return True
-            if idx > stones[-1]:
-                return False
-            
-            pos = bisect.bisect_left(stones, idx)
-            # print(idx, "here", stones[pos])
-            if stones[pos] != idx:
-                return False
-            # i can always assume i start from index 1
-            if prevjump - 1 > 0:
-                memo[idx, prevjump] = cross(idx + prevjump-1, prevjump-1) or cross(idx + prevjump, prevjump) or cross(idx + prevjump+1, prevjump+1)
-                return memo[idx, prevjump]
-            else:
-                memo[idx, prevjump] = cross(idx + prevjump, prevjump) or cross(idx + prevjump+1, prevjump+1)
-                return memo[idx, prevjump]
-        return cross(1, 1)
+        dp = [set() for _ in range(len(stones))]
+        # base case 
+        dp[0] = [0]
+        
+        for idx, jumps in enumerate(dp):
+            cur_pos = stones[idx]
+            for jump in jumps:
+                choices = [jump + change for change in range(-1, 2)]
+                for choice in choices:
+                    if choice > 0:
+                        new_pos = bisect.bisect_left(stones, cur_pos + choice)
+                        if new_pos < len(dp) and stones[new_pos] == cur_pos + choice:
+                            dp[new_pos].add(choice)
+        return bool(dp[-1])
