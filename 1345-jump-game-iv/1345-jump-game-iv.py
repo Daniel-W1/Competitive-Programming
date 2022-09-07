@@ -24,6 +24,6 @@ class Solution:
                 
             if arr[idx] not in seen:
                 for ind in inds[arr[idx]]:
-                    if idx != ind:
+                    if idx != ind and ind not in visited:
                         q.append((dist+1, ind))
             seen.add(arr[idx])
