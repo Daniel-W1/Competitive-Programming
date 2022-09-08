@@ -1,14 +1,19 @@
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
-        m = len(grid[0])-1
-        n = len(grid)-1
-        memo = {}
-        def findminsum(a,b):
-            if (a,b) not in memo:
-                if a == m and b == n:
-                    return grid[b][a]
-                if a > m or b > n:
-                    return float('inf')
-                memo[a,b] = min(findminsum(a+1,b)+grid[b][a] , findminsum(a,b+1)+grid[b][a])
-            return memo[a,b]
-        return findminsum(0,0)
+        rowSize = len(grid)
+        colSize = len(grid[0])
+        
+        @cache
+        def dfs(row, col):
+            if not 0 <= row < rowSize or not 0 <= col < colSize:
+                return float('inf')
+            
+            if row == rowSize-1 and col == colSize-1:
+                return grid[row][col]
+            
+            choice1 = dfs(row+1, col) + grid[row][col]
+            choice2 = dfs(row, col+1) + grid[row][col]
+            
+            return min(choice1, choice2)
+    
+        return dfs(0,0)
