@@ -1,13 +1,17 @@
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        height = len(triangle)-1
-        memo = {}
-        def minpath(i,j):
-            if (i,j) not in memo:
-                if i == height:
-                    return triangle[i][j]
-                memo[i,j] = min(minpath(i+1,j)+triangle[i][j],minpath(i+1,j+1)+triangle[i][j])
-            return memo[i,j]
-        return minpath(0,0)
+        rowSize = len(triangle)
         
-        
+        @cache
+        def dfs(row, idx):
+            if not idx < len(triangle[row]):
+                return float('inf')
+            
+            if row == rowSize - 1:
+                return triangle[row][idx]
+            
+            choice1 = dfs(row+1, idx) + triangle[row][idx]
+            choice2 = dfs(row+1, idx + 1) + triangle[row][idx]
+            
+            return min(choice1, choice2)
+        return dfs(0,0)
