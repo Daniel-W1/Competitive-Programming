@@ -16,6 +16,7 @@ class Solution:
         # we will also use the shifting of index idea to set our basecases
         
         # that means -1 becomes 0 and last index becomes n
+        '''
         n, m = len(text1), len(text2)
         dp = [[-1]*(n+1) for _ in range(m+1)]
         
@@ -35,3 +36,21 @@ class Solution:
                     dp[row][col] = max(dp[row-1][col], dp[row][col-1])
          # just like the recursive code
         return dp[-1][-1]
+        
+        '''
+        # now how can we optimise the space for the bottom up code that should be
+        # pretty easy
+        # as we can see from the dp, we only need the previous row
+        n, m = len(text1), len(text2)
+        prev = [0]*(n+1)
+        cur = [0]*(n+1)
+        
+        for row in range(1, m+1):
+            for col in range(1, n+1):
+                if text2[row-1] == text1[col-1]:
+                    cur[col] = 1 + prev[col-1]
+                else:
+                    cur[col] = max(prev[col], cur[col-1])
+            prev, cur = cur,prev 
+            
+        return prev[-1]
