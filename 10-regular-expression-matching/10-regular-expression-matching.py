@@ -17,16 +17,10 @@ class Solution:
                 return check(idx1+1, idx2+1)
             
             elif (curchar == curpchar or curpchar == ".") and nextpchar == "*":
-                if curpchar == ".": 
-                    curchar = s[idx1] if idx1 < len(s) else ""
-                while idx1 < len(s) and s[idx1] == curchar:
-                    res = check(idx1, idx2+2)
-                    if res: return True
-                    idx1 += 1
-                    if idx1 < len(s) and curpchar == ".":
-                        curchar = s[idx1]
-                    
-                return check(idx1, idx2+2)
+                ans = check(idx1, idx2+2) 
+                if idx1 < len(s) and (s[idx1] == p[idx2] or p[idx2] == '.'):
+                    ans = ans or check(idx1+1, idx2)
+                return ans
             elif nextpchar == "*":
                 return check(idx1, idx2+2)
             else:
