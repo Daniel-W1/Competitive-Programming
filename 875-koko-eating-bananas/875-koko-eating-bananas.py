@@ -32,25 +32,22 @@ class Solution:
         go through the whole thing and check  by how much hour i can finish that pile for example 30 with k = 16 takes 2 hours because ceil(30/16) is 2
         '''
         
-        left, right = 0, sum(piles)
-        ans = float('inf')
-        
-        while left <= right:
-            mid = (left+right)//2
-            hours = 0
+        def workable(speed):
+            hours_spent = 0
             for pile in piles:
-                if not mid: 
-                    hours = float('inf')
-                    break
-                hours += ceil(pile/mid)
-            
-            if hours <= h:
-                ans = min(ans, mid)
-                right = mid - 1
-            else:
-                left = mid + 1
+                hours_spent += math.ceil(pile/speed)
+            return hours_spent <= h
+
+        hi, lo = max(piles), 1
         
-        return ans 
+        while hi > lo:
+            mid = (hi + lo) // 2
+            if workable(mid):
+                hi = mid
+            else:
+                lo = mid + 1
+        return hi
+        
     
         
         
