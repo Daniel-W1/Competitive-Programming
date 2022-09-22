@@ -1,30 +1,46 @@
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        prereqs = {}
-        for course,pre in prerequisites:
-            if course not in prereqs:
-                prereqs[course] = []
-            prereqs[course].append(pre)
+    def canFinish(self, num: int, pre: List[List[int]]) -> bool:
+        '''
+        okay this is a good top sort question and let's solve it now
         
-        visited = set()
+        0 -- > 1
         
-        def dfs(node,visited):
-            if node in visited:
-                return False
-            if node not in prereqs:
-                return True
-            visited.add(node)
-            for pre in prereqs[node]:
-                res = dfs(pre,visited)
-                if not res:
-                    return False
-            visited.remove(node)
-            prereqs[node] = []
-            return True
-        for node in prereqs:
-            res = dfs(node,visited)
-            if not res:
-                return False
-        return True
+        first how do we build the adj list for this question
         
+        1 -- > 0 -- > 1
+        '''
+        graph = defaultdict(list)
+        self.cycle = False
+        for node1, node2 in pre:
+            graph[node1].append(node2)
             
+        visited = [False]*num
+        res = []
+        
+        # print(graph)
+        def topsort(node, seen):
+            visited[node] = True
+            seen.add(node)
+            for neighbor in graph.get(node, []):
+                if neighbor in seen:
+                    self.cycle = True
+                    return
+                
+                if not visited[neighbor]:
+                    topsort(neighbor, seen)
+                    
+            seen.remove(node)
+            res.append(node)
+            
+        for node in range(num):
+            if not visited[node]:
+                topsort(node, set())
+        
+        # print(res, self.cycle)
+        # 0 -> 1
+        '''
+        0 --> 1 
+        |
+        2
+        '''
+        return len(res) == num and not self.cycle
