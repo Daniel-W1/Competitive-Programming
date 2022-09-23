@@ -11,22 +11,16 @@ class Solution:
         m, n = len(matrix), len(matrix[0])
         memo = {}
         directions = [(1, 0), (-1, 0), (0, -1), (0,1)]
-        visited = [[False]*len(matrix[0]) for _ in range(len(matrix))]
         
-        def dfs(row, col, visited):
+        def dfs(row, col):
             if (row, col) in memo: return memo[row, col]
-            visited[row][col] = True
-            
             res = 1
             for dx, dy in directions:
                 newr, newc = row + dx, col + dy
                 if 0 <= newr < m and 0 <= newc < n:
-                    if not visited[newr][newc]:
-                        if matrix[newr][newc] > matrix[row][col]:
-                            res = max(res, dfs(newr, newc, visited)+1)
-            
-            visited[row][col] = False
+                    if matrix[newr][newc] > matrix[row][col]:
+                        res = max(res, dfs(newr, newc)+1)
             memo[row, col] = res
             return res
         
-        return max(dfs(i, j, visited) for i, j in product(range(m), range(n)))
+        return max(dfs(i, j) for i, j in product(range(m), range(n)))
