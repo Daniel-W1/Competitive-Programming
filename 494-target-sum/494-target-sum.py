@@ -14,15 +14,16 @@ class Solution:
                                 +(2)  (0) or   
                                 
         '''
-        @cache
+        memo = {}
         def check(idx, cursum):
+            if (idx, cursum) in memo: return memo[idx, cursum]
             if idx == len(nums):
                 return int(cursum == target)
         
             choice1 = check(idx+1, cursum + nums[idx])
             choice2 = check(idx+1, cursum - nums[idx])
             
-            return choice1 + choice2
-        
+            memo[idx, cursum] = choice1 + choice2
+            return memo[idx, cursum]
         return check(0, 0)
         
