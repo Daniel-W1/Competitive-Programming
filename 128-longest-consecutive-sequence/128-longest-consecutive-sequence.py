@@ -18,16 +18,12 @@ class Solution:
         '''
         lookup = set(nums)
         max_amount = 0
-        seen = set()
+        
         for num in lookup:
             if num-1 in lookup:
                 continue
             
-            if num in seen:
-                continue
-                
             cnt = 1
-            seen.add(num)
             while num + 1 in lookup:
                 cnt += 1
                 num += 1
