@@ -16,21 +16,24 @@ class Solution:
         
         if we don't check how much long sequence we can get by starting from that number and update our answer
         '''
-        longest_streak = 0
-        num_set = set(nums)
-
-        for num in num_set:
-            if num - 1 not in num_set:
-                current_num = num
-                current_streak = 1
-
-                while current_num + 1 in num_set:
-                    current_num += 1
-                    current_streak += 1
-
-                longest_streak = max(longest_streak, current_streak)
-
-        return longest_streak
+        lookup = set(nums)
+        max_amount = 0
+        seen = set()
+        for num in lookup:
+            if num-1 in lookup:
+                continue
+            
+            if num in seen:
+                continue
+                
+            cnt = 1
+            seen.add(num)
+            while num + 1 in lookup:
+                cnt += 1
+                num += 1
+            max_amount = max(max_amount, cnt)
+            
+        return max_amount
     
     # time comp is O(n) our for loops goes through the whole thing once and 
     # our while loop worst case goes through all of them once so ya O(2n)`O(n)
