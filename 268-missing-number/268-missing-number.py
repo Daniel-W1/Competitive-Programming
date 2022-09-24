@@ -1,4 +1,12 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        return sum(range(0,len(nums)+1))-sum(nums)
-    
+        # xor means exclusive or right
+        # 011, 000, 001
+        # 000, 001 , 010
+        
+        answer = len(nums)
+        for idx, num in enumerate(nums):
+            answer ^= idx
+            answer ^= num
+        return answer
+        
