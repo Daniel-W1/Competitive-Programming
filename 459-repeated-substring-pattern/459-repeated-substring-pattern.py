@@ -21,19 +21,24 @@ class Solution:
             
             return ans
         
-        res = sorted(factors(len(s)), reverse = True)
+        res = factors(len(s))
         # print(res)
         for num in res:
-            check = []
-            cur = ""
-            for idx in range(len(s)):
-                if not idx%num and idx:
-                    check.append(cur)
+            check = True
+            prev = s[:num]
+            cur = s[num]
+            for idx in range(num+1, len(s)):
+                if not idx%num:
+                    if cur != prev:
+                        check = False
+                        break
                     cur = ""
                 cur += s[idx]
-            check.append(cur)
+            if cur != prev:
+                check = False
+    
             # print(check)
-            if len(set(check)) == 1:
+            if check:
                 return True
         return False
                 
