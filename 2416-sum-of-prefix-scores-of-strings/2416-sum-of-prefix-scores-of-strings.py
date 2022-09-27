@@ -27,6 +27,8 @@ class Solution:
         a2
        b  c
       c     b
+      
+      so ya this should work
         '''
         self.root = TrieNode()
         for word in words:
