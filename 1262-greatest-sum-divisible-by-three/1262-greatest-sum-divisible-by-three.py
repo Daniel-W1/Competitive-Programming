@@ -37,6 +37,7 @@ class Solution:
                 choice2 = -sum(twos)
                 
             ans -= min(choice1, choice2)
+            
         elif ans%3 == 2:
             if len(ones) > 1:
                 choice1 = -sum(ones)
