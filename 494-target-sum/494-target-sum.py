@@ -1,29 +1,15 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        '''
-        so at each index i have a choice and i need to do one of the choice
+        real_target = (sum(nums) - target)/2
         
-        so i have 2 states idx, and cursum 
-        
-        at each index i make those choices and when the whole thing is over if
-        my sum is target i return 1 else 0
-        and just collect all those things to get the result
-        
-        
-                                    +(1) or -(-1)
-                                +(2)  (0) or   
-                                
-        '''
-        memo = {}
-        def check(idx, cursum):
-            if (idx, cursum) in memo: return memo[idx, cursum]
-            if idx == len(nums):
-                return int(cursum == target)
-        
-            choice1 = check(idx+1, cursum + nums[idx])
-            choice2 = check(idx+1, cursum - nums[idx])
+        @cache
+        def dfs(idx, cursum):
+            if idx >= len(nums):
+                return int(cursum == real_target)
             
-            memo[idx, cursum] = choice1 + choice2
-            return memo[idx, cursum]
-        return check(0, 0)
+            choice1 = dfs(idx + 1, cursum)
+            choice2 = dfs(idx + 1, cursum  + nums[idx])
+            
+            return choice1 + choice2
         
+        return dfs(0, 0)
