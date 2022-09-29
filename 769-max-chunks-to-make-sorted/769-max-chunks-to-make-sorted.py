@@ -8,13 +8,18 @@ class Solution:
                 next_smaller[stack.pop()] = True
             stack.append(idx)
         
+        minElement = [0]*len(arr)
+        minElement[-1] = arr[-1]
+        for idx in range(len(arr)-2, -1, -1):
+            minElement[idx] = min(arr[idx], minElement[idx+1])
+        # print(len(stack))
         # print(next_smaller)
+        # print(minElement)
         seen_max = -1
         ans = 0
         for idx in range(len(arr)):
             seen_max = max(seen_max, arr[idx])
-            if not next_smaller[idx] and idx+1 < len(arr) and seen_max < min(arr[idx+1:]):
+            if not next_smaller[idx] and idx + 1 < len(arr) and seen_max < minElement[idx+1]:
                 ans += 1
-                
                 
         return ans + 1
