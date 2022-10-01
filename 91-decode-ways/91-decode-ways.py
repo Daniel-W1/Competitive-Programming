@@ -37,9 +37,37 @@ class Solution:
                 return dfs(idx + 1) + dfs(idx + 2)
         
             elif int(s[idx]) >= 1:
-                return dfs(idx+1)
+                return dfs(idx+1)  
             else:
                 return 0
         return dfs(0)
-            
+        # time comp is O(n) and space comp is O(n)
+        # so how are u going to change this in to bottom up 
+        # may be even some space optimisation
+        '''
+        "226"
+        [3,2,1]
+        
+        1111
+        [1,3,2,1]
+        
+        1234
+        [3,2,1,1]
+        '''
+        dp[0]*len(s)
+        if s[-1] != "0": dp[-1] = 1
+        
+        for idx in range(len(s)-2, -1, -1):
+            if s[idx] == "0":
+                dp[idx] = 0
                 
+            elif s[idx] == "1":
+                dp[idx] = dp[idx+1] + 1
+                
+            elif s[idx] == "2" and int(s[idx]) <= 6:
+                dp[idx] = dp[idx+1] + 1
+                
+            else:
+                dp[idx] = dp[idx+1]
+        # print(dp)
+        return dp[0]
