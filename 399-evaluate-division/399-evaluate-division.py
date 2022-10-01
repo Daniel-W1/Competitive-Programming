@@ -10,15 +10,12 @@ class Solution:
         a/c = 6
         
         '''
-        graph = defaultdict(list)
+        graph = defaultdict(dict)
         edge_meaning = {}
         
         for idx, (node1, node2) in enumerate(equations):
-            graph[node1].append(node2)
-            graph[node2].append(node1)
-            
-            edge_meaning[node1 + "," + node2] = values[idx]
-            edge_meaning[node2 + "," + node1] = 1/values[idx]
+            graph[node1][node2] = values[idx]
+            graph[node2][node1] = 1/values[idx]
         
         
         def bfs(node1, node2):
@@ -36,8 +33,7 @@ class Solution:
                     visited.add(cur)
                     for other in graph[cur]:
                         if other not in visited:
-                            edge = cur + "," + other
-                            q.append((other, res * edge_meaning[edge]))
+                            q.append((other, res * graph[cur][other]))
                             
             return -1
         
