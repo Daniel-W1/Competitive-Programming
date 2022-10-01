@@ -56,26 +56,24 @@ class Solution:
         1234
         [3,2,1,1]
         '''
-        dp = [0]*len(s)
-        if s[-1] != "0": dp[-1] = 1
+        dp = [0, 0, 1]
+        if s[-1] != "0": dp[1] = 1
         
         for idx in range(len(s)-2, -1, -1):
-            choice1 = dp[idx+1]
-            choice2 = dp[idx+2] if idx + 2 < len(s) else 1
-            
             if s[idx] == "0":
-                dp[idx] = 0
+                dp[0] = 0
                 
             elif s[idx] == "1":
-                dp[idx] = choice1 + choice2 
+                dp[0] = dp[1] + dp[2]
                 
             elif s[idx] == "2" and int(s[idx+1]) <= 6:
-                dp[idx] = choice1 + choice2 
+                dp[0] = dp[1] + dp[2]
             else:
-                dp[idx] = choice1
-                
+                dp[0] = dp[1]
+            
+            dp[0], dp[1], dp[2] = 0, dp[0], dp[1]
         # print(dp)
-        return dp[0]
+        return dp[1]
     
         '''
         so can u optimise the space even more ?
