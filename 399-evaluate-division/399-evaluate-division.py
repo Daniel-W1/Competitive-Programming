@@ -20,8 +20,7 @@ class Solution:
             edge_meaning[node1 + "," + node2] = values[idx]
             edge_meaning[node2 + "," + node1] = 1/values[idx]
         
-        # print(graph)
-        # print(edge_meaning)
+        
         def bfs(node1, node2):
             visited = set()
             if node1 not in graph or node2 not in graph:
@@ -39,10 +38,10 @@ class Solution:
                         if other not in visited:
                             edge = cur + "," + other
                             q.append((other, res * edge_meaning[edge]))
+                            
             return -1
         
         ans = []
         for node1, node2 in queries:
             ans.append(bfs(node1, node2))
-        
         return ans
