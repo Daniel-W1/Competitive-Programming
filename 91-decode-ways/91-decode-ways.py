@@ -54,20 +54,31 @@ class Solution:
         1234
         [3,2,1,1]
         '''
-        dp[0]*len(s)
+        dp = [0, 0]
         if s[-1] != "0": dp[-1] = 1
         
         for idx in range(len(s)-2, -1, -1):
             if s[idx] == "0":
-                dp[idx] = 0
+                dp[0] = 0
                 
             elif s[idx] == "1":
-                dp[idx] = dp[idx+1] + 1
+                dp[0] = dp[1] + 1
                 
             elif s[idx] == "2" and int(s[idx]) <= 6:
-                dp[idx] = dp[idx+1] + 1
+                dp[0] = dp[1] + 1
                 
             else:
-                dp[idx] = dp[idx+1]
+                dp[0] = dp[1]
+            
+            dp[1], dp[0] = dp[0], 0
+            
         # print(dp)
         return dp[0]
+    
+        '''
+        so can u optimise the space even more ?
+        
+        ya as we can see we are only looking at the last element parts
+        so i think I can do that
+        '''
+        
