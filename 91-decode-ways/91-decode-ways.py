@@ -25,7 +25,6 @@ class Solution:
         my state is one and time comp 2^n am making 2 decision at each index
         O(N)
         
-        '''
         @cache
         def dfs(idx):
             if idx >= len(s): return 1
@@ -41,6 +40,9 @@ class Solution:
             else:
                 return 0
         return dfs(0)
+        
+        '''
+        
         # time comp is O(n) and space comp is O(n)
         # so how are u going to change this in to bottom up 
         # may be even some space optimisation
@@ -54,24 +56,24 @@ class Solution:
         1234
         [3,2,1,1]
         '''
-        dp = [0, 0]
+        dp = [0]*len(s)
         if s[-1] != "0": dp[-1] = 1
         
         for idx in range(len(s)-2, -1, -1):
+            choice1 = dp[idx+1]
+            choice2 = dp[idx+2] if idx + 2 < len(s) else 1
+            
             if s[idx] == "0":
-                dp[0] = 0
+                dp[idx] = 0
                 
             elif s[idx] == "1":
-                dp[0] = dp[1] + 1
+                dp[idx] = choice1 + choice2 
                 
-            elif s[idx] == "2" and int(s[idx]) <= 6:
-                dp[0] = dp[1] + 1
-                
+            elif s[idx] == "2" and int(s[idx+1]) <= 6:
+                dp[idx] = choice1 + choice2 
             else:
-                dp[0] = dp[1]
-            
-            dp[1], dp[0] = dp[0], 0
-            
+                dp[idx] = choice1
+                
         # print(dp)
         return dp[0]
     
