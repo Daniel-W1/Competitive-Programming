@@ -17,7 +17,7 @@ class Solution:
                 
                 if neededTime[left] < neededTime[right]:
                     left = right
-            
+    
             else:
                 left = right
         
