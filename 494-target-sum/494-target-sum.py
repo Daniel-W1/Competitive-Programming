@@ -17,24 +17,31 @@ class Solution:
         
         if int(s2) != s2 or s2 < 0: return 0
         
-        dp = [[0 for _ in range(int(s2+1))] for _ in range(len(nums))]
+        dp = [0 for _ in range(int(s2+1))] 
+        cur = [0 for _ in range(int(s2+1))]
         
         # print(s2)
         # base cases
         for row in range(len(nums)):
-            dp[row][0] = 1
+            dp[0] = 1
+            cur[0] = 1
         
         if nums[0] <= s2:
-            dp[0][nums[0]] += 1
+            dp[nums[0]] += 1
         
         for row in range(1,len(nums)):
             for col in range(int(s2 + 1)):
                 if nums[row] > col:
-                    dp[row][col] = dp[row-1][col]
+                    cur[col] = dp[col]
                 else:
                     # print(row, col)
-                    dp[row][col] = dp[row-1][col] + dp[row-1][col - nums[row]]
+                    cur[col] = dp[col] + dp[col - nums[row]]
+            dp, cur = cur, dp
         
         # print(dp)
+        return dp[-1]
+    
+        '''
+        okay cool can u optimise the space ?
 
-        return dp[-1][-1]
+        '''
