@@ -1,6 +1,19 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
-        
+        @cache
+        def dp(i):
+            if i == len(s):
+                return 1
+
+            if s[i] == "0":
+                return 0
+
+            ans = 0
+            if i+1<len(s) and int(s[i]+s[i+1])<27:
+                ans = dp(i+2)
+            return ans + dp(i+1)
+
+        return dp(0)
         '''
         226
         [1, 2, 3]
@@ -56,24 +69,24 @@ class Solution:
         1234
         [3,2,1,1]
         '''
-        dp = [0, 0, 1]
-        if s[-1] != "0": dp[1] = 1
+#         dp = [0, 0, 1]
+#         if s[-1] != "0": dp[1] = 1
         
-        for idx in range(len(s)-2, -1, -1):
-            if s[idx] == "0":
-                dp[0] = 0
+#         for idx in range(len(s)-2, -1, -1):
+#             if s[idx] == "0":
+#                 dp[0] = 0
                 
-            elif s[idx] == "1":
-                dp[0] = dp[1] + dp[2]
+#             elif s[idx] == "1":
+#                 dp[0] = dp[1] + dp[2]
                 
-            elif s[idx] == "2" and int(s[idx+1]) <= 6:
-                dp[0] = dp[1] + dp[2]
-            else:
-                dp[0] = dp[1]
+#             elif s[idx] == "2" and int(s[idx+1]) <= 6:
+#                 dp[0] = dp[1] + dp[2]
+#             else:
+#                 dp[0] = dp[1]
             
-            dp[0], dp[1], dp[2] = 0, dp[0], dp[1]
-        # print(dp)
-        return dp[1]
+#             dp[0], dp[1], dp[2] = 0, dp[0], dp[1]
+#         # print(dp)
+#         return dp[1]
     
         '''
         so can u optimise the space even more ?
