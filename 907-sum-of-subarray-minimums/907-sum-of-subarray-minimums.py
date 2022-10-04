@@ -40,4 +40,6 @@ class Solution:
             ans += (left*right + right)*arr[idx]
         
         return ans % (10**9 + 7)
-            
+        # that would work O(n), O(n) can u do it in one pass ?
+        
+        
