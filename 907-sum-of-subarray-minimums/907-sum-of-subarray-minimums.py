@@ -1,5 +1,20 @@
 class Solution:
     def sumSubarrayMins(self, arr: List[int]) -> int:
+        # the one pass sol
+        stack = []
+        arr = [-float('inf')] + arr + [-float('inf')]
+        n = len(arr)
+        ans = 0
+        
+        for idx in range(n):
+            while stack and arr[stack[-1]] > arr[idx]:
+                cur = stack.pop()
+                right = idx - cur
+                left = cur - stack[-1] - 1
+                ans += (left*right + right) * arr[cur]
+            stack.append(idx)
+            
+        return ans % (10**9 + 7)
         '''
         so this is a good monostack problem and here is how am going to do it
         first find the next and the prev smaller elements
@@ -10,7 +25,6 @@ class Solution:
         
         4*1 + 6 + 9 + 4 + 4  = 27
         
-        '''
         next_smaller = {idx: -1 for idx in range(len(arr))}
         prev_smaller = {idx : -1 for idx in range(len(arr))}
         
@@ -41,5 +55,6 @@ class Solution:
         
         return ans % (10**9 + 7)
         # that would work O(n), O(n) can u do it in one pass ?
-        
-        
+
+        '''
+                
