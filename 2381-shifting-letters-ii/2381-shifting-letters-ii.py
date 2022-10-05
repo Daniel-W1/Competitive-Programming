@@ -1,20 +1,19 @@
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
-        prefix = [0]*len(s)
-        for left, right, direction in shifts:
-            prefix[left] += 1 if direction else -1
-            if right + 1 < len(s):
-                prefix[right+1] -= 1 if direction else -1
+        n = len(s)
+        psum = [0]*n
+        s = [char for char in s]
         
+        for start,end,direction in shifts:
+            shift = 1 if direction == 1 else -1
+            psum[start]+=shift
+            if end+1<n: psum[end+1]-=shift
         
-        prefix = list(accumulate(prefix))
-        new = ""
+        for i in range(1,n):
+            psum[i] = psum[i-1] + psum[i]
         
-        '''
-        122 + 25
-        '''
-        for idx, val in enumerate(prefix):
-            new_code = (((ord(s[idx]) + val) - 97) % 26) + 97
-            new += chr(new_code)
-            
-        return new
+        for i in range(n):
+            new_char = chr((((ord(s[i]) + psum[i]) - 97) % 26) + 97)
+            s[i] = new_char
+        
+        return "".join(s)
