@@ -5,28 +5,13 @@ class Solution:
             return False
         
         target = total // 2
-        
-        dp = [False for _ in range(target + 1)] 
-        cur = [False for _ in range(target + 1)] 
-        
-        for idx in range(len(nums)):
-            dp[0] = True
-            cur[0] = True
-        
-        if nums[0] <= target: dp[nums[0]] = True
+        @cache
+        def dfs(idx, target):
+            if target == 0:
+                return True
+            if target < 0 or idx >= len(nums):
+                return False
             
-        for idx in range(1, len(nums)):
-            for target in range(target + 1):
-                
-                if nums[idx] > target:
-                    cur[target] = dp[target]
-                
-                else:
-                    cur[target] = dp[target] or dp[target - nums[idx]]
+            return dfs(idx + 1, target - nums[idx]) or dfs(idx + 1, target)
             
-            dp, cur = cur, dp
-        return dp[-1]
-    #  time and space O(n*target), n = len(nums)
-    # time O(n*target), space O(n)
-    
-                
+        return dfs(0, target)
