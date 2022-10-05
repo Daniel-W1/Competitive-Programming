@@ -6,20 +6,27 @@ class Solution:
         
         target = total // 2
         
-        dp = [[False for _ in range(target + 1)] for _ in range(len(nums))]
+        dp = [False for _ in range(target + 1)] 
+        cur = [False for _ in range(target + 1)] 
         
         for idx in range(len(nums)):
-            dp[idx][0] = True
+            dp[0] = True
+            cur[0] = True
         
-        if nums[0] <= target: dp[0][nums[0]] = True
+        if nums[0] <= target: dp[nums[0]] = True
             
         for idx in range(1, len(nums)):
             for target in range(target + 1):
+                
                 if nums[idx] > target:
-                    dp[idx][target] = dp[idx-1][target]
+                    cur[target] = dp[target]
                 
                 else:
-                    dp[idx][target] = dp[idx-1][target] or dp[idx-1][target - nums[idx]]
-        
-        return dp[-1][-1]
+                    cur[target] = dp[target] or dp[target - nums[idx]]
+            
+            dp, cur = cur, dp
+        return dp[-1]
+    #  time and space O(n*target), n = len(nums)
+    # time O(n*target), space O(n)
+    
                 
