@@ -11,12 +11,12 @@ class Solution:
             new_root = TreeNode(val)
             new_root.left = root
             return new_root
-        q = [root]
+        q = deque([root])
         dep = 2
         while q:
             width = len(q)
             for _ in range(width):
-                node = q.pop(0)
+                node = q.popleft()
                 if dep == depth:
                     current_left = node.left
                     current_right = node.right
