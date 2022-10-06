@@ -1,29 +1,27 @@
-class TimeMap:
+from sortedcontainers import SortedDict
 
+class TimeMap:
     def __init__(self):
-        self.allvalues = collections.defaultdict(list)
+        self.key_time_map = {}
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.allvalues[key].append((timestamp, value))
+        # If the 'key' does not exist in dictionary.
+        if not key in self.key_time_map:
+            self.key_time_map[key] = SortedDict()
+            
+        # Store '(timestamp, value)' pair in 'key' bucket.
+        self.key_time_map[key][timestamp] = value
+        
 
     def get(self, key: str, timestamp: int) -> str:
-        array = self.allvalues[key]
-        if not array: return ""
-        left, right = 0, len(array)-1
+        # If the 'key' does not exist in dictionary we will return empty string.
+        if not key in self.key_time_map:
+            return ""
         
-        while left <= right:
-            mid = (left+right)//2
-            if array[mid][0] == timestamp:
-                return array[mid][1]
-            elif array[mid][0] < timestamp:
-                left = mid + 1
-            else:
-                right = mid - 1
+        it = self.key_time_map[key].bisect_right(timestamp)
+        # If iterator points to first element it means, no time <= timestamp exists.
+        if it == 0:
+            return ""
         
-        return array[left-1][1] if array[left-1][0] < timestamp else ""
-
-
-# Your TimeMap object will be instantiated and called as such:
-# obj = TimeMap()
-# obj.set(key,value,timestamp)
-# param_2 = obj.get(key,timestamp)
+        # Return value stored at previous position of current iterator.
+        return self.key_time_map[key].peekitem(it - 1)[1]
