@@ -6,13 +6,21 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        visited = set()
-        cur = head
-        while cur:
-            if cur in visited:
-                return cur
-            visited.add(cur)
-            cur = cur.next
-        return None
-    # so the above solution is space O(n) and time O(n)
-    # now let's bring the space O(1) sol
+        if not head: return None
+        slow, fast = head, head
+        
+        while True:
+            slow = slow.next
+            if fast and fast.next:
+                fast = fast.next.next
+            else: return None
+            
+            if slow == fast:
+                break
+                
+        slow = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        
+        return slow
