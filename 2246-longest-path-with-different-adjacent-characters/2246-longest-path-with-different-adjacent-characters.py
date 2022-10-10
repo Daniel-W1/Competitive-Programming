@@ -5,7 +5,6 @@ class Solution:
             p = parent[idx]
             tree[p].append(idx)
         
-        # print(tree)
         self.ans = 0
         def dfs(root, parent):
             if root not in tree:
@@ -18,7 +17,6 @@ class Solution:
                     res2, res1 = res1, res
                 elif res > res2: res2 = res
             
-            # print(res1, res2, root, parent)
             self.ans = max(self.ans, res1 + res2 + 1)
             return max(res1, res2)+1 if s[root] != s[parent] else 0
         
