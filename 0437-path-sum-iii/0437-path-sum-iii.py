@@ -8,25 +8,27 @@ class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
         prefix = {0:1}
         self.ans = 0
+        cur = 0
         
-        def dfs(root, cur):
+        def dfs(root):
+            nonlocal cur 
+            
             if not root:
                 return 
             
             cur += root.val
-            # print(prefix, self.ans, cur)
             
             self.ans += prefix.get(cur - targetSum, 0)
             
             prefix[cur] = prefix.get(cur, 0) + 1
             
-            dfs(root.left, cur)    
-            dfs(root.right, cur)
+            dfs(root.left)    
+            dfs(root.right)
                 
             prefix[cur] -= 1
             cur -= root.val 
 
-        dfs(root, 0)
+        dfs(root)
 
         return self.ans
             
