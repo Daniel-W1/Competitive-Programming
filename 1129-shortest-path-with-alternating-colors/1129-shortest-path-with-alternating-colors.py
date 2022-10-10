@@ -9,13 +9,7 @@ class Solution:
         for n1, n2 in blueEdges:
             blue[n1].add(n2)
             
-        
-        '''
-        red = {0:{1}, 1:{2}}
-        blue = {}
-        '''
-        
-        
+        visited = set()
         distance = [float('inf') for _ in range(n)]
         def bfs(start,color):
             q = deque([(start, color, 0)])
@@ -35,14 +29,11 @@ class Solution:
                             if (neigh, "b") not in visited:
                                 q.append((neigh, "b", dist+1))
         
-            return float('inf')
-        
-        visited = set()
+            for idx, val in enumerate(distance):
+                if val == float('inf'):
+                    distance[idx] = -1
+                    
         bfs(0, -1)
-        for idx, val in enumerate(distance):
-            if val == float('inf'):
-                distance[idx] = -1
-        
         return distance
                 
                     
