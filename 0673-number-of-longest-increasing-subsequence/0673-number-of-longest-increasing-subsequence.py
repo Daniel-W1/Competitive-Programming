@@ -10,7 +10,7 @@ class Solution:
                         new[idx] = new[other]
                     elif dp[other]+1 == dp[idx]:
                         new[idx] += new[other]
-                    
+                        
                     dp[idx] = max(dp[idx], dp[other]+1)
                     
             if new[idx] == 0:
@@ -18,8 +18,7 @@ class Solution:
         
         ans = 0
         the_max = max(dp)
-        # print(new)
-        # print(dp)
+
         for idx in range(len(nums)):
             if dp[idx] == the_max:
                 ans += new[idx]
