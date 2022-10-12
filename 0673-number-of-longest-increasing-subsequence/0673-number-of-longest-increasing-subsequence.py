@@ -1,31 +1,22 @@
 class Solution:
     def findNumberOfLIS(self, nums: List[int]) -> int:
-        dp = [1]*len(nums)
-        new = [0]*len(nums)
-        
-        for idx in range(len(nums)):
-            for other in range(idx-1, -1, -1):
-                if nums[idx] > nums[other]:
-                    if dp[other]+1 > dp[idx]:
-                        new[idx] = new[other]
-                    elif dp[other]+1 == dp[idx]:
-                        new[idx] += new[other]
-                        
-                    dp[idx] = max(dp[idx], dp[other]+1)
-                    
-            if new[idx] == 0:
-                new[idx] = 1
-        
-        ans = 0
-        the_max = max(dp)
+        n = len(nums)
+        dp = [1]*n
+        dp2= [1]*n
 
-        for idx in range(len(nums)):
-            if dp[idx] == the_max:
-                ans += new[idx]
+        for j in range(n):
+            for i in range(j):
+                if nums[j] > nums[i]:
+                    if dp[j] < 1+dp[i]:
+                        dp[j] = 1+dp[i]
+                        dp2[j] = dp2[i]
+                    elif dp[j] == 1+dp[i]:
+                        dp2[j] += dp2[i]
+
+        ans = 0
+        max_subs = max(dp)
+        for i in range(len(dp2)):
+            if dp[i] == max_subs:
+                ans += dp2[i]
 
         return ans
-                
-                        
-                    
-        
-        
