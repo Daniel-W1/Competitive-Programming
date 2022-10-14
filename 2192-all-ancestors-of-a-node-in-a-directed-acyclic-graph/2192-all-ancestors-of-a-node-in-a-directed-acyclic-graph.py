@@ -26,8 +26,7 @@ class Solution:
                     for n in ans[cur]:
                         ans[neigh].add(n)
                     ans[neigh].add(cur)
-            # print(q)
-            # print(ans)
+    
         return [sorted(val) for val in ans]
             
         
