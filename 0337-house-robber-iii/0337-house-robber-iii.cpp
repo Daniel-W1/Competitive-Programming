@@ -1,31 +1,29 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def rob(self, root: Optional[TreeNode]) -> int:
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    private:
+    pair<int, int> dfs(TreeNode* node){
+        if (node == NULL) return {0, 0};
+
+        pair<int, int> left = dfs(node -> left);
+        pair<int, int> right = dfs(node -> right);
+
+        int child_ans = max(node->val + left.second + right.second, left.first + right.first);
+        return {child_ans, left.first + right.first};
+        }
         
-        
-        def dfs(node):
-            if not node:
-                return (0, 0)
-            
-            # if not node.left and not node.right:
-            #     return (node.val, 0)
-            
-            left = dfs(node.left)
-            right = dfs(node.right)
-            
-            child_ans = max(node.val + left[1] + right[1], left[0] + right[0])
-            return (child_ans, left[0] + right[0])
-        
-        res = dfs(root)
-        return max(res)
-        
-        
-            
-            
-            
-            
+public:
+    int rob(TreeNode* root) {
+        pair<int, int> res = dfs(root);
+        return max(res.first, res.second);
+    }
+};
