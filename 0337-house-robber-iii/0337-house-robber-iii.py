@@ -12,8 +12,8 @@ class Solution:
             if not node:
                 return (0, 0)
             
-            if not node.left and not node.right:
-                return (node.val, 0)
+            # if not node.left and not node.right:
+            #     return (node.val, 0)
             
             left = dfs(node.left)
             right = dfs(node.right)
