@@ -1,20 +1,11 @@
 class Solution:
-    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        # solve this thing fast using union find and get the time comp straight
-        # time comp
-        n = len(edges)
-        
-        parent = [node for node in range(n)]
-        rank = [1]*n
-        
-        def find(node):
+    def find(self, node, parent):
             while node != parent[node]:
                 parent[node] = parent[parent[node]]
                 node = parent[node]
             return node
-        
-        def union(node1, node2):
-            parent1, parent2 = find(node1), find(node2)
+    def union(self, node1, node2, parent, rank):
+            parent1, parent2 = self.find(node1, parent), self.find(node2, parent)
             
             if parent1 == parent2:
                 return [node1, node2]
@@ -32,9 +23,16 @@ class Solution:
                 
             return []
         
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        # solve this thing fast using union find and get the time comp straight
+        # time comp
+        n = len(edges)
+        parent = [node for node in range(n)]
+        rank = [1]*n
+        
         candidate = []
         for node1, node2 in edges:
-            res = union(node1-1, node2-1)
+            res = self.union(node1-1, node2-1, parent, rank)
             if res:
                 candidate = res
         
