@@ -1,40 +1,29 @@
 class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        
-        visited = set()
-        safe = set()
-        not_safe = set()
-
-        def dfs(node):
-            if node in visited:
-                return False
-            
+        queue = deque([])
+        new_graph = defaultdict(list)
+        indegrees = defaultdict(int)
+        for node in range(len(graph)):
             if not graph[node]:
-                return True
-            
-            if node in safe or node in not_safe:
-                return node in safe
-            
-            visited.add(node)
-            check = True
-            for neighbor in graph[node]:
-                check = check and dfs(neighbor)
-            
-            visited.remove(node)
-            if check: safe.add(node)
-            else: not_safe.add(node)
-            
-            return check
-        
-        n = len(graph)
-        for node in range(n):
-            dfs(node)
-            
-            if not graph[node]:
-                safe.add(node)
-        
-        return sorted(safe)
+                queue.append(node)
+            else:
+                indegrees[node] = len(graph[node])
+                # now let's reverse it
+                for neighbor in graph[node]:
+                    new_graph[neighbor].append(node)
         
         
-            
+        ans = []
+        while queue:
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                ans.append(node)
+                
+                for neighbor in new_graph[node]:
+                    indegrees[neighbor] -= 1
+                    if not indegrees[neighbor]:
+                        queue.append(neighbor)
+        
+        return sorted(ans)
+                        
             
