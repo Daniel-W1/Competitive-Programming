@@ -19,7 +19,6 @@ class Solution:
             self.ans = max(self.ans, left + right + node.val)
             
             max_path = max(left, right) + node.val
-            # print(left, right, node.val)
             
             return max(max_path, 0)
         
