@@ -28,8 +28,9 @@ class Solution:
                 if check:
                     self.ans = True
             
-            dfs(root.left)
-            dfs(root.right)
+            if not self.ans:
+                dfs(root.left)
+                dfs(root.right)
             
         dfs(root)
         return self.ans
