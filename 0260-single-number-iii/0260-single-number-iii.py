@@ -8,7 +8,6 @@ class Solution:
         # find the least significant turned on bit
         mask = cur & -cur
         answer = [0, 0]
-        groups = [[], []]
         
         # separate the numbers
         for num in nums:
