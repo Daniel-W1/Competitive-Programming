@@ -9,7 +9,6 @@ class Solution:
         if * do the majic trick
         
         '''
-        if not s and p: return set(p) == {"*"}
         n1, n2 = len(s), len(p)
         
         @cache
