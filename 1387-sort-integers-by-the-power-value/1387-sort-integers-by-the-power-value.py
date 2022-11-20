@@ -1,15 +1,13 @@
 class Solution:
     def getKth(self, lo: int, hi: int, k: int) -> int:
         
+        @cache
         def getSteps(num):
-            steps = 0
-            while num != 1:
-                if num & 1:
-                    num = 3*num + 1
-                else:
-                    num //= 2
-                steps += 1
-            return steps
+            if num == 1: return 0
+            if num & 1:
+                return getSteps(3*num + 1) + 1
+            else:
+                return getSteps(num//2) + 1
         
         
         answer = []
@@ -17,5 +15,4 @@ class Solution:
             answer.append((getSteps(num), num))
         
         answer.sort()
-        # print(answer)
         return answer[k-1][1]
