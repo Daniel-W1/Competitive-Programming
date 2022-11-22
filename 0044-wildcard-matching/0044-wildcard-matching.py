@@ -9,28 +9,21 @@ class Solution:
         if * do the majic trick
         
         '''
-        n1, n2 = len(s), len(p)
-        
-        @cache
-        def dp(idx1, idx2):
-    
-            if idx1 == n1 and idx2 == n2:
+        @lru_cache(None)          
+        def dfs(i, j):
+            if i >= len(s) and j >= len(p):
                 return True
-            
-            if idx1 == n1 and p[idx2] == "*":
-                return dp(idx1, idx2+1)
-            
-            if idx2 == n2 or idx1 == n1: return False
-            
-            if s[idx1] == p[idx2]:
-                return dp(idx1 + 1, idx2 + 1)
-            
-            elif p[idx2] == "?":
-                return dp(idx1 + 1, idx2 + 1)
-            
-            elif p[idx2] == "*":
-                return dp(idx1, idx2+1) or dp(idx1 + 1, idx2) or dp(idx1 + 1, idx2 + 1)
+            if i >= len(s):
+                if p[j] == "*":
+                    return dfs(i, j+1)
+                return False
+            if j >= len(p):
+                return False
+            if i < len(s) and (s[i] == p[j] or p[j] == "?"):
+                return dfs(i+1, j+1)
+            print(i, j)
+            if p[j] == "*":
+                return dfs(i+1, j) or dfs(i, j+1) or dfs(i+1, j+1)
+            return False
         
-        return dp(0, 0)
-                
-        
+        return dfs(0, 0)
