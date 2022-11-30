@@ -10,43 +10,17 @@ class Solution:
                 [1, 0, 0, 0]
                    [1, 4]
         """
-        houses.sort()
         heaters.sort()
+        min_radius = 0
         
-        
-        left, right = 0, 10**9
-        answer = 0
-        
-        while left <= right:
-            radius = (left + right)//2
+        for h in houses:
+            idx = bisect_left(heaters, h)
             
-            # now check the mid 
-            arr = [0]*len(houses)
-            for heater in heaters:
-                l_end = heater - radius
-                r_end = heater + radius
-                
-                l_idx = bisect_left(houses, l_end)
-                r_idx = bisect_right(houses, r_end)
-                
-                # print(l_end, radius, heater)
-                if l_idx < len(houses):
-                    arr[l_idx] += 1
-                if r_idx < len(houses):
-                    arr[r_idx] -= 1
-            
-            
-            arr = list(accumulate(arr))
-            # print(arr, radius)
-            # check for zero
-            
-            if 0 in arr:
-                left = radius + 1
+            if idx == 0:
+                min_radius = max(min_radius, heaters[0] - h)
+            elif idx == len(heaters):
+                min_radius = max(min_radius, h - heaters[-1])
             else:
-                answer = radius
-                right = radius - 1
+                min_radius = max(min_radius, min(heaters[idx] - h, h - heaters[idx-1]))
         
-        return answer
-    
-                
-                
+        return min_radius
