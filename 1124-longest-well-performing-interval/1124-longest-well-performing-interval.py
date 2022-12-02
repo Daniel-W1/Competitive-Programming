@@ -17,9 +17,7 @@ class Solution:
             if val in prefix:
                 answer = max(answer, idx - prefix[val])
             
-            if cur_sum not in prefix:
-                prefix[cur_sum] = idx
-            # print(cur_sum, prefix, answer)
+            prefix.setdefault(cur_sum, idx)
         
         return answer
                 
