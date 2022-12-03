@@ -7,43 +7,44 @@
 
 class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-        # first let's make the graph
         parents = {}
         def dfs(node, parent):
             if not node:
                 return
-            
-            parents[node.val] = parent
+
+            parents[node] = parent
             dfs(node.left, node)
             dfs(node.right, node)
-        dfs(root, None)
-        
-        # now do bfs
-        q = deque([(target)])
-        steps = 0
-        ans = []
-        seen = set()
-        
-        while q:
-            for _ in range(len(q)):
-                node = q.popleft()
-                if steps == k:
-                    ans.append(node.val)
-                
-                seen.add(node)
-                
-                if parents[node.val] and parents[node.val] not in seen:
-                    q.append(parents[node.val])
-                
-                if node.left and node.left not in seen:
-                    q.append(node.left)
-                
-                if node.right and node.right not in seen:
-                    q.append(node.right)
-            steps += 1
-            if steps > k:
-                break
-            
-        return ans
-        
-            
+
+        def findallnodes_k_distance(root, target, k):
+            dfs(root, None)
+            queue = deque([target])
+            steps = 0
+            answer = []
+            visited = set()
+            visited.add(target)
+
+            while queue:
+                size = len(queue)
+                for _ in range(size):
+                    cur = queue.popleft()
+
+                    if steps == k:
+                        answer.append(cur.val)
+                        continue
+
+                    if cur.left and cur.left not in visited:
+                        queue.append(cur.left)
+                        visited.add(cur.left)
+                        
+                    if cur.right and cur.right not in visited:
+                        queue.append(cur.right)
+                        visited.add(cur.right)
+                        
+                    if parents[cur] and parents[cur] not in visited:
+                        queue.append(parents[cur])
+                        visited.add(parents[cur])
+                steps += 1
+
+            return answer
+        return findallnodes_k_distance(root, target, k)
