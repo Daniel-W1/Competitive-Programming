@@ -1,20 +1,28 @@
 class Solution:
-    def countTexts(self, S: str) -> int:
+    def countTexts(self, pressedKeys: str) -> int:        
+        mod = 10**9 + 7
+        n = len(pressedKeys)
         
-        mod = 10 ** 9 + 7
+        dp = [0]*n
+        dp[-1] = 1
         
-        dp = [0] * (len(S) + 1)
-        dp[0] = 1
-        for i in range(1, len(S) + 1):
-            dp[i] = dp[i - 1]
-            if i - 2 >= 0 and S[i-1] == S[i-2]:
-                dp[i] += dp[i - 2]
-            if i - 3 >= 0 and S[i-1] == S[i-2] and S[i-1] == S[i-3]:
-                dp[i] += dp[i - 3]
-                
-            if S[i-1] in {"7", "9"}:
-                if i - 4 >= 0 and S[i-1] == S[i-2] and S[i-1] == S[i-3] and S[i-1] == S[i-4]:
-                    dp[i] += dp[i - 4]
-            dp[i] %= mod
+        for idx in range(n-2, -1, -1):
+            max_len = 3 if pressedKeys[idx] not in ["7", "9"] else 4
+            right = idx
             
-        return dp[-1] % mod
+            for change in range(1, max_len + 1):
+                if idx + change < n:
+                    dp[idx] += dp[idx + change] 
+                else:
+                    dp[idx] += 1
+                
+                dp[idx] %= mod
+                if idx + change < n and pressedKeys[idx + change] != pressedKeys[idx] or (idx + change == n):
+                    break
+                
+                
+        return dp[0]
+    
+    
+    
+    
