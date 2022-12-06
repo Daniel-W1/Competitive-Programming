@@ -4,7 +4,9 @@ class Solution:
         directions = [(1, 0), (0, 1)]
         
         @cache
-        def dfs(row1, col1, row2, col2):
+        def dfs(row1, col1, col2):
+            
+            row2 = row1 + col1 - col2
             if row1 == n or row2 == n or col1 == n or col2 == n:
                 return -float('inf')
             
@@ -29,10 +31,10 @@ class Solution:
                 
                 for d2x, d2y in directions:
                     new_r2, new_c2 = row2 + d2x, col2 + d2y
-                    res = max(res, dfs(new_r1, new_c1, new_r2, new_c2) + total_cherry)
+                    res = max(res, dfs(new_r1, new_c1, new_c2) + total_cherry)
             
             return res
 
         
-        ans =  dfs(0, 0, 0, 0) 
+        ans =  dfs(0, 0, 0) 
         return ans if ans != -float('inf') else 0
