@@ -4,6 +4,8 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         
@@ -16,14 +18,10 @@ class Solution:
             left = dfs(node.left)
             right = dfs(node.right)
             
-            self.ans = max(self.ans, left + right + node.val)
+            self.ans = max(self.ans, left + node.val + right, right + node.val, left + node.val, node.val)
             
-            max_path = max(left, right) + node.val
-            
-            return max(max_path, 0)
+            return max(right + node.val, left + node.val, node.val)
         
         dfs(root)
-        
         return self.ans
-            
             
