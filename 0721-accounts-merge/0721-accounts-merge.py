@@ -1,7 +1,7 @@
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
         n = len(accounts)
-        # rank = [1] * n
+        rank = [1] * n
         parents = [idx for idx in range(n)]
 
         def find(index):
@@ -12,18 +12,24 @@ class Solution:
         
         def union(index1, index2):
             parent1, parent2 = find(index1), find(index2)
-            parents[parent1] = parent2
-        
-        # now do the n^2 part
-        owners = {}
-        for idx, account in enumerate(accounts):
-            for idx2 in range(1, len(account)):
-                email = account[idx2]
+            
+            if rank[parent1] > rank[parent2]:
+                parents[parent2] = parent1
                 
-                if email in owners:
-                    union(idx, owners[email])
-                    
-                owners[email] = idx
+            elif rank[parent1] < rank[parent2]:
+                parents[parent1] = parent2
+                
+            else:
+                parents[parent2] = parent1
+                rank[parent1] += 1
+                
+        # now do the n^2 part
+        for idx, account in enumerate(accounts):
+            account1 = set(account[1:])
+            for idx2 in range(n):
+                account2 = set(accounts[idx2][1:])
+                if account1 & account2:
+                    union(idx, idx2)
         
         # print(parents)
         merged = defaultdict(set)
