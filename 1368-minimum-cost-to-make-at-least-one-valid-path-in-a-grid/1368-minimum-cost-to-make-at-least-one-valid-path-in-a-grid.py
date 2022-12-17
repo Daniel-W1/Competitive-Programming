@@ -1,16 +1,15 @@
 class Solution:
     def minCost(self, grid: List[List[int]]) -> int:
-        
         # so this is obvious dijkstra problem, let's just do it and see how it goes
         n, m = len(grid), len(grid[0])
         distance = {(r, c) : float('inf') for r in range(n) for c in range(m)}
         directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         visited = set()
         
-        heap = [(0, 0, 0)]
+        queue = deque([(0, 0, 0)])
         
-        while heap:
-            dist, row, col = heappop(heap)
+        while queue:
+            dist, row, col = queue.popleft()
             visited.add((row, col))
             
             # check the end
@@ -29,6 +28,10 @@ class Solution:
                         cost = dist + int(idx + 1 != grid[row][col])
                         
                         if distance[newr, newc] > cost:
-                            heappush(heap, (cost, newr, newc))
                             distance[newr, newc] = cost
+                            
+                            if cost > dist:
+                                queue.append((cost, newr, newc))
+                            else:
+                                queue.appendleft((cost, newr, newc))
                             
