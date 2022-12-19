@@ -10,13 +10,7 @@ class Solution:
             
             haha here comes digit dp, beautiful stuff
         """
-        nums = []
-        temp = n
-        while n:
-            nums.append(n%10)
-            n //= 10
-        
-        nums = nums[::-1]
+        nums = str(n)
         # so here are the states, idx, tight boolean, 
         
         @cache
@@ -24,7 +18,7 @@ class Solution:
             if idx == len(nums): 
                 return 1
             
-            max_range = nums[idx] + 1 if tight else 10
+            max_range = int(nums[idx]) + 1 if tight else 10
             cur = 0
             
             for num in range(max_range):
@@ -35,7 +29,8 @@ class Solution:
                 if not num and not mask:
                     cur += dfs(idx + 1, False , mask) 
                 else:
-                    cur += dfs(idx + 1,tight and num==nums[idx],mask | 1 << num) 
+                    cur += dfs(idx + 1,tight and num==int(nums[idx]),mask | 1 << num) 
+                    
             return cur
         
         return dfs(0, True, 0) - 1
