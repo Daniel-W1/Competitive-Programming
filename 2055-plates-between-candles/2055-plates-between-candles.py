@@ -16,14 +16,8 @@ class Solution:
         
         for l, h in queries:
             idx = bisect_left(candles, l)
-            idx2 = bisect_left(candles, h)
+            idx2 = bisect_right(candles, h) - 1
             
-            if idx == len(candles):
-                idx -= 1
-                
-            if idx2 == len(candles) or candles[idx2] > h:
-                idx2 -= 1
-            # print(idx, idx2, "here")
             if candles and idx2 > idx:
                 ans.append(max(0, prefix[candles[idx2]] - prefix[candles[idx]]))
             else:
