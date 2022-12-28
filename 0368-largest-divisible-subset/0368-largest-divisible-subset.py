@@ -43,5 +43,8 @@ class Solution:
                 prev_lcm = cur
                 ans.append(nums[idx])
                 target -= 1
-        
+            
+            if not target:
+                break
+                
         return ans
