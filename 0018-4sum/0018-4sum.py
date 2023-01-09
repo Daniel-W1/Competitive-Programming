@@ -15,21 +15,25 @@ class Solution:
                 second_num = nums[idx2]
                 
                 if second_num == prev2: continue
-            
-                new_target = target - first_num - second_num
-                seen = set()
-                prev3 = inf
                 
-                for idx in range(idx2 + 1, n):
-                    if nums[idx] == prev3: continue
+                # print(first_num, second_num)
+                new_target = target - first_num - second_num
+                left, right = idx2 + 1, n-1
+                
+                while left < right:
+                    cur = nums[left] + nums[right]
+                    if cur == new_target:
+                        answer.append([first_num, second_num, nums[left], nums[right]])
+                        the_left, the_right = nums[left], nums[right]
+                        while left < right and nums[left] == the_left:
+                            left += 1
+                        while right > left and nums[right] == the_right:
+                            right -= 1
                         
-                    if new_target - nums[idx] in seen:
-                        val = new_target - nums[idx]
-                        answer.append([first_num, second_num, val, nums[idx]])
-                        prev3 = nums[idx]
-                        
-                    seen.add(nums[idx])
-                    
+                    elif cur > new_target:
+                        right -= 1
+                    else:
+                        left += 1
                     
                 prev2 = second_num
                 
