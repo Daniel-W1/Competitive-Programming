@@ -1,8 +1,10 @@
+from sortedcontainers import SortedList
+
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         
-        idx = bisect_right(intervals, newInterval)
-        intervals.insert(idx, newInterval)
+        intervals = SortedList(intervals)
+        intervals.add(newInterval)
         
         # print(idx, intervals)
         
