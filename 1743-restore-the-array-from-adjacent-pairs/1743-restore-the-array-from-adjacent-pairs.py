@@ -3,25 +3,18 @@ class Solution:
         # we can just assume their is an edge between adjecent guys 
         
         graph = defaultdict(list)
+        cnt = Counter()
         candidate = set()
         
         for num1, num2 in adjacentPairs:
-            if num1 not in graph:
-                candidate.add(num1)
-            else:
-                candidate.remove(num1)
-                
-            if num2 not in graph:
-                candidate.add(num2)
-            else:
-                candidate.remove(num2)
-            
             graph[num1].append(num2)
             graph[num2].append(num1)
+            cnt[num1] += 1
+            cnt[num2] += 1
             
             
         
-        num1 = candidate.pop()
+        num1 = [val for val in cnt if cnt[val] == 1][0]
         ans = [num1]
         q = deque([num1])
         visited = set()
