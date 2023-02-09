@@ -1,18 +1,22 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        
-        n = str(num)
-        ans = num
-        
-        for i in range(len(n)):
-            for j in range(i+1, len(n)):
-                
-                # print(n[i], n[j],"here")
-                new_num = n[:i] + n[j] + n[i+1:j] + n[i] + n[j+1:]
-                # print(new_num, n[:i] , n[j+1:])
-                ans = max(ans, int(new_num))
-        
-        return ans
-                
-                
-        
+        nums = list(str(num))
+
+        cur_max = -1
+
+        next_max = [0]*len(nums)
+        for i in range(len(nums)-1,-1,-1):
+
+            next_max[i] = cur_max
+            if nums[i] > nums[cur_max]:
+                cur_max = i
+
+
+        for i, val in enumerate(nums):
+            if nums[i] < nums[next_max[i]]:
+                nums[i] , nums[next_max[i]] = nums[next_max[i]] , nums[i]
+                break
+
+        newNum = "".join(nums)
+
+        return int(newNum)
