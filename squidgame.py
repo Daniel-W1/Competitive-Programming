@@ -39,3 +39,15 @@ class Solution(object):
         LB = [i / N * 100 + i % N for i in xrange(N * N) if B[i / N][i % N]]
         c = collections.Counter(i - j for i in LA for j in LB)
         return max(c.values() or [0])
+def sortedSquares(self, A):
+    answer = collections.deque()
+    l, r = 0, len(A) - 1
+    while l <= r:
+        left, right = abs(A[l]), abs(A[r])
+        if left > right:
+            answer.appendleft(left * left)
+            l += 1
+        else:
+            answer.appendleft(right * right)
+            r -= 1
+    return list(answer)
