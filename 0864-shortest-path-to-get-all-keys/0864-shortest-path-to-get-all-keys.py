@@ -26,7 +26,6 @@ class Solution:
         q = deque([(starting[0], starting[1], "")])
         visited.add((starting[0], starting[1], ""))
         
-        ans = inf
         steps = 0
         while q:
             
@@ -63,4 +62,4 @@ class Solution:
 
             steps += 1
                     
-        return ans if ans != inf else -1
+        return -1
