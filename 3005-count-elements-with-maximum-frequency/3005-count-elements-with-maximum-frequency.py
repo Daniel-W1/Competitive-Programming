@@ -1,6 +1,15 @@
 class Solution:
     def maxFrequencyElements(self, nums: List[int]) -> int:
-        cnt = Counter(nums)
-        the_max_count = max(cnt.values())
+        max_seen = max_seen_cnt = 0
+        cnt = defaultdict(int)
         
-        return sum(val for val in cnt.values() if val == the_max_count)
+        for num in nums:
+            cnt[num] += 1
+            
+            if cnt[num] > max_seen:
+                max_seen = cnt[num]
+                max_seen_cnt = 1
+            elif cnt[num] == max_seen:
+                max_seen_cnt += 1
+        
+        return max_seen * max_seen_cnt
