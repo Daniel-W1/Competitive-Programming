@@ -7,9 +7,10 @@ class Solution:
             for count in range(cnt[char]):
                 answer.append(char)
         
-        for char in s:
+        for char in cnt:
             if char not in order:
-                answer.append(char)
+                for count in range(cnt[char]):
+                    answer.append(char)
         
         return "".join(answer)
             
