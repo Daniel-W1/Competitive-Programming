@@ -1,32 +1,26 @@
-from sortedcontainers import SortedList
-
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        pos = len(intervals)
         
-        intervals = SortedList(intervals)
-        intervals.add(newInterval)
+        for idx, (start, end) in enumerate(intervals):
+            if start >= newInterval[0]:
+                pos = idx
+                break
+            elif end >= newInterval[0]:
+                pos = idx + 1
+                break
+            
         
-        # print(idx, intervals)
+        intervals.insert(pos, newInterval)
+        merged_intervals = []
         
-        start = intervals[0][0]
-        prev = intervals[0][1]
-        
-        ans = []
-        for idx in range(1, len(intervals)):
-            if intervals[idx][0] > prev:
-                ans.append([start, prev])
-                start = intervals[idx][0]
-                prev = intervals[idx][1]
+        for start,end in intervals:
+            if not merged_intervals:
+                merged_intervals.append([start, end])
+            elif merged_intervals[-1][1] >= start:
+                merged_intervals[-1][1] = max(end, merged_intervals[-1][1])
             else:
-                prev = max(prev, intervals[idx][1])
+                merged_intervals.append([start, end])
         
-        ans.append([start, prev])
+        return merged_intervals
         
-        return ans
-        
-            
-       
-        
-            
-            
-                
