@@ -25,6 +25,7 @@ class Solution:
                 count, idx = heappop(pos_and_cnt)
                 if count + 1:
                     waiting_q.append((count + 1, current_idx))
+        
             ans += 1
             current_idx += 1
         
