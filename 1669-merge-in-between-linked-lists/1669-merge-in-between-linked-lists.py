@@ -23,11 +23,7 @@ class Solution:
         
         # get the end of the middle list
         middle_l = list2
-        
-        if start: 
-            start.next = middle_l
-        else:
-            start = middle_l
+        start.next = middle_l
             
         while middle_l and middle_l.next:
             middle_l = middle_l.next
